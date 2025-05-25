@@ -2,8 +2,27 @@
 
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import bannerProduct from "../assets/bannerProduct.png";
 
 const Home = () => {
+  const getRandomImage = (category) => {
+    if (category === "men's clothing") {
+      return "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg";
+    }
+
+    if (category === "electronics") {
+      return "https://fakestoreapi.com/img/81QpkIctqPL._AC_SX679_.jpg";
+    }
+
+    if (category === "jewelery") {
+      return "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg";
+    }
+
+    if (category === "women's clothing") {
+      return "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg";
+    }
+  };
+
   return (
     <div className="home-page">
       {/* Hero Section */}
@@ -76,17 +95,16 @@ const Home = () => {
                 style={{
                   position: "relative",
                   borderRadius: "20px",
-                  overflow: "hidden",
+                  overflow: "dden",
                   boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
                 }}
               >
                 <img
-                  src="https://via.placeholder.com/500x300/2563eb/ffffff?text=Tech+Products"
+                  src={bannerProduct}
                   alt="Tech products"
                   style={{
                     width: "100%",
                     height: "auto",
-                    display: "block",
                   }}
                 />
               </div>
@@ -159,10 +177,7 @@ const Home = () => {
                   <div style={{ position: "relative", overflow: "hidden" }}>
                     <Card.Img
                       variant="top"
-                      src={`https://via.placeholder.com/300x200/1e40af/ffffff?text=${category.replace(
-                        " ",
-                        "+"
-                      )}`}
+                      src={`${getRandomImage(category)}`}
                       style={{
                         height: "200px",
                         objectFit: "cover",
