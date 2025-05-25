@@ -95,8 +95,9 @@ const Home = () => {
                 style={{
                   position: "relative",
                   borderRadius: "20px",
-                  overflow: "dden",
+                  overflow: "hidden", // Corregido
                   boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+                  aspectRatio: "16/10", // Relación de aspecto moderna
                 }}
               >
                 <img
@@ -104,7 +105,9 @@ const Home = () => {
                   alt="Tech products"
                   style={{
                     width: "100%",
-                    height: "auto",
+                    height: "100%",
+                    objectFit: "cover", // Ajuste inteligente
+                    objectPosition: "center center", // Enfoca área importante
                   }}
                 />
               </div>

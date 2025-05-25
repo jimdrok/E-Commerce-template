@@ -13,10 +13,8 @@ const NavigationBar = () => {
       style={{
         background: "linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)",
         boxShadow: "0 4px 20px rgba(30, 58, 138, 0.15)",
-
         borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
       }}
-      variant="dark"
     >
       <Container>
         <Navbar.Brand
@@ -164,18 +162,6 @@ const NavigationBar = () => {
           </Nav>
         </Navbar.Collapse>
       </Container>
-
-      <style jsx>{`
-        @keyframes pulse {
-          0%,
-          100% {
-            transform: scale(1);
-          }
-          50% {
-            transform: scale(1.1);
-          }
-        }
-      `}</style>
     </Navbar>
   );
 };

@@ -414,31 +414,6 @@ const ProductDetail = () => {
                 >
                   🛒 Agregar al carrito
                 </Button>
-                <Button
-                  size="lg"
-                  style={{
-                    backgroundColor: "transparent",
-                    color: "#64748b",
-                    border: "2px solid #e2e8f0",
-                    borderRadius: "25px",
-                    padding: "12px 20px",
-                    fontSize: "1rem",
-                    fontWeight: "600",
-                    transition: "all 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = "#f8fafc";
-                    e.target.style.borderColor = "#cbd5e1";
-                    e.target.style.color = "#475569";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = "transparent";
-                    e.target.style.borderColor = "#e2e8f0";
-                    e.target.style.color = "#64748b";
-                  }}
-                >
-                  ❤️ Guardar en favoritos
-                </Button>
               </div>
             </div>
 
