@@ -1,11 +1,36 @@
 "use client";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Badge, Container, Nav, Navbar } from "react-bootstrap";
 import { useCart } from "../../context/CartContext";
 
 const NavigationBar = () => {
   const { totalItems } = useCart();
+  const { pathname } = useLocation();
+
+  // Configuración común para todos los enlaces
+  const navLinks = [
+    { to: "/", text: "Home" },
+    { to: "/products", text: "Productos" },
+    { to: "/cart", text: "Carrito", badge: totalItems },
+  ];
+
+  const isActive = (path) => pathname === path;
+
+  const linkBaseStyle = (isActive) => ({
+    color: isActive ? "white" : "rgba(255, 255, 255, 0.9)",
+    fontWeight: "500",
+    fontSize: "1rem",
+    padding: "8px 16px",
+    borderRadius: "25px",
+    margin: "0 4px",
+    transition: "all 0.3s ease",
+    textDecoration: "none",
+    position: "relative",
+    overflow: "hidden",
+    backgroundColor: isActive ? "rgba(149, 149, 149, 0.12)" : "transparent",
+    boxShadow: isActive ? "0 2px 8px rgba(255, 255, 255, 0.2)" : "none",
+  });
 
   return (
     <Navbar
@@ -52,113 +77,66 @@ const NavigationBar = () => {
 
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link
-              as={Link}
-              to="/"
-              style={{
-                color: "rgba(255, 255, 255, 0.9)",
-                fontWeight: "500",
-                fontSize: "1rem",
-                padding: "8px 16px",
-                borderRadius: "25px",
-                margin: "0 4px",
-                transition: "all 0.3s ease",
-                textDecoration: "none",
-                position: "relative",
-                overflow: "hidden",
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = "rgba(255, 255, 255, 0.15)";
-                e.target.style.color = "white";
-                e.target.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = "transparent";
-                e.target.style.color = "rgba(255, 255, 255, 0.9)";
-                e.target.style.transform = "translateY(0)";
-              }}
-            >
-              Home
-            </Nav.Link>
-
-            <Nav.Link
-              as={Link}
-              to="/products"
-              style={{
-                color: "rgba(255, 255, 255, 0.9)",
-                fontWeight: "500",
-                fontSize: "1rem",
-                padding: "8px 16px",
-                borderRadius: "25px",
-                margin: "0 4px",
-                transition: "all 0.3s ease",
-                textDecoration: "none",
-                position: "relative",
-                overflow: "hidden",
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = "rgba(255, 255, 255, 0.15)";
-                e.target.style.color = "white";
-                e.target.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = "transparent";
-                e.target.style.color = "rgba(255, 255, 255, 0.9)";
-                e.target.style.transform = "translateY(0)";
-              }}
-            >
-              Productos
-            </Nav.Link>
-
-            <Nav.Link
-              as={Link}
-              to="/cart"
-              className="position-relative"
-              style={{
-                color: "rgba(255, 255, 255, 0.9)",
-                fontWeight: "500",
-                fontSize: "1rem",
-                padding: "8px 16px",
-                borderRadius: "25px",
-                margin: "0 4px",
-                transition: "all 0.3s ease",
-                textDecoration: "none",
-                position: "relative",
-                overflow: "hidden",
-                width: "auto",
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = "rgba(255, 255, 255, 0.15)";
-                e.target.style.color = "white";
-                e.target.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = "transparent";
-                e.target.style.color = "rgba(255, 255, 255, 0.9)";
-                e.target.style.transform = "translateY(0)";
-              }}
-            >
-              Carrito
-              {totalItems > 0 && (
-                <Badge
-                  pill
-                  style={{
-                    backgroundColor: "#ef4444",
-                    color: "white",
-                    fontSize: "0.75rem",
-                    fontWeight: "600",
-                    padding: "4px 8px",
-                    border: "2px solid white",
-                    boxShadow: "0 2px 8px rgba(239, 68, 68, 0.4)",
-                    animation: totalItems > 0 ? "pulse 2s infinite" : "none",
-                    marginLeft: "8px",
-                    marginBottom: "4px",
-                  }}
-                >
-                  {totalItems}
-                </Badge>
-              )}
-            </Nav.Link>
+            {navLinks.map(({ to, text, badge }) => (
+              <Nav.Link
+                key={to}
+                as={Link}
+                to={to}
+                style={linkBaseStyle(isActive(to))}
+                onMouseEnter={(e) => {
+                  if (!isActive(to)) {
+                    e.target.style.backgroundColor =
+                      "rgba(255, 255, 255, 0.15)";
+                    e.target.style.color = "white";
+                    e.target.style.transform = "translateY(-1px)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive(to)) {
+                    e.target.style.backgroundColor = linkBaseStyle(
+                      isActive(to)
+                    ).backgroundColor;
+                    e.target.style.color = linkBaseStyle(isActive(to)).color;
+                    e.target.style.transform = "translateY(0)";
+                  }
+                }}
+              >
+                {text}
+                {isActive(to) && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: "4px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      width: "24px",
+                      height: "2px",
+                      backgroundColor: "white",
+                      borderRadius: "2px",
+                    }}
+                  />
+                )}
+                {badge > 0 && text === "Carrito" && (
+                  <Badge
+                    pill
+                    style={{
+                      backgroundColor: "#ef4444",
+                      color: "white",
+                      fontSize: "0.75rem",
+                      fontWeight: "600",
+                      padding: "4px 8px",
+                      border: "2px solid white",
+                      boxShadow: "0 2px 8px rgba(239, 68, 68, 0.4)",
+                      animation: badge > 0 ? "pulse 2s infinite" : "none",
+                      marginLeft: "8px",
+                      marginBottom: "4px",
+                    }}
+                  >
+                    {badge}
+                  </Badge>
+                )}
+              </Nav.Link>
+            ))}
           </Nav>
         </Navbar.Collapse>
       </Container>
