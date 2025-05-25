@@ -1,13 +1,34 @@
 "use client";
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import { Card, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
+import { useState } from "react";
 
 const ProductList = ({ products }) => {
   const { addToCart } = useCart();
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   return (
     <Container className="my-4">
+      {showSuccessMessage && (
+        <Alert
+          style={{
+            backgroundColor: "#dcfce7",
+            border: "1px solid #bbf7d0",
+            borderRadius: "16px",
+            padding: "1rem 1.5rem",
+            color: "#166534",
+            fontSize: "1.1rem",
+            textAlign: "center",
+            marginBottom: "2rem",
+            position: "relative",
+            animation: "slideIn 0.3s ease-out",
+          }}
+        >
+          <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>✅</div>
+          <strong>¡Éxito!</strong> Se agregó tu producto al carrito
+        </Alert>
+      )}
       <Row xs={1} md={2} lg={3} className="g-4">
         {products.map((product) => (
           <Col key={product.id}>
@@ -176,7 +197,11 @@ const ProductList = ({ products }) => {
 
                     <Button
                       className="w-100"
-                      onClick={() => addToCart(product)}
+                      onClick={() => {
+                        addToCart(product);
+                        setShowSuccessMessage(true);
+                        setTimeout(() => setShowSuccessMessage(false), 3000);
+                      }}
                       style={{
                         background: "linear-gradient(45deg, #2563eb, #3b82f6)",
                         border: "none",

@@ -19,6 +19,7 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -78,6 +79,16 @@ const ProductDetail = () => {
               transform: rotate(360deg);
             }
           }
+          @keyframes slideIn {
+            0% {
+              opacity: 0;
+              transform: translateY(-20px);
+            }
+            100% {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
         `}</style>
       </Container>
     );
@@ -104,6 +115,25 @@ const ProductDetail = () => {
 
   return (
     <Container style={{ padding: "2rem 0", maxWidth: "1200px" }}>
+      {showSuccessMessage && (
+        <Alert
+          style={{
+            backgroundColor: "#dcfce7",
+            border: "1px solid #bbf7d0",
+            borderRadius: "16px",
+            padding: "1rem 1.5rem",
+            color: "#166534",
+            fontSize: "1.1rem",
+            textAlign: "center",
+            marginBottom: "2rem",
+            position: "relative",
+            animation: "slideIn 0.3s ease-out",
+          }}
+        >
+          <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>✅</div>
+          <strong>¡Éxito!</strong> Se agregó tu producto al carrito
+        </Alert>
+      )}
       <Row>
         {/* Columna de la imagen */}
         <Col md={6} className="mb-4">
@@ -389,6 +419,8 @@ const ProductDetail = () => {
                     for (let i = 0; i < selectedQuantity; i++) {
                       addToCart(product);
                     }
+                    setShowSuccessMessage(true);
+                    setTimeout(() => setShowSuccessMessage(false), 3000);
                   }}
                   style={{
                     background: "linear-gradient(45deg, #2563eb, #3b82f6)",
