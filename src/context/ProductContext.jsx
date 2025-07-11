@@ -4,7 +4,7 @@ import axios from "axios";
 const ProductContext = createContext();
 
 // MockAPI base URL - replace with your actual MockAPI endpoint
-const API_BASE_URL = "https://6762b8b946efb37323738b8b.mockapi.io/api/v1";
+const API_BASE_URL = "https://68706bd17ca4d06b34b6bcd6.mockapi.io/";
 
 export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
