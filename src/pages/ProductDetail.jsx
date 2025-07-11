@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
+import { useProducts } from "../context/ProductContext";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -23,16 +24,12 @@ const ProductDetail = () => {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showLoginMessage, setShowLoginMessage] = useState(false);
+  const { products } = useProducts();
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(
-          "https://68706bd17ca4d06b34b6bcd6.mockapi.io/api/v1/products"
-        );
-        if (!response.ok) throw new Error("Producto no encontrado");
-        const data = await response.json();
-        const foundProduct = data.find((p) => String(p.id) === String(id));
+        const foundProduct = products.find((p) => String(p.id) === String(id));
         if (!foundProduct) throw new Error("Producto no encontrado");
         setProduct(foundProduct);
       } catch (err) {
@@ -43,7 +40,7 @@ const ProductDetail = () => {
     };
 
     fetchProduct();
-  }, [id]);
+  }, [id, products]);
 
   if (loading)
     return (

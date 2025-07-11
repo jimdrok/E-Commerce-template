@@ -332,15 +332,6 @@ const AdminProducts = () => {
                             >
                               {product.title}
                             </h6>
-                            <p
-                              style={{
-                                color: "#64748b",
-                                margin: "0.25rem 0 0 0",
-                                fontSize: "0.8rem",
-                              }}
-                            >
-                              ID: {product.id}
-                            </p>
                           </div>
                         </div>
                       </td>
