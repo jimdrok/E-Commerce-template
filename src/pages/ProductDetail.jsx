@@ -27,10 +27,14 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`https://fakestoreapi.com/products/${id}`);
+        const response = await fetch(
+          "https://68706bd17ca4d06b34b6bcd6.mockapi.io/api/v1/products"
+        );
         if (!response.ok) throw new Error("Producto no encontrado");
         const data = await response.json();
-        setProduct(data);
+        const foundProduct = data.find((p) => String(p.id) === String(id));
+        if (!foundProduct) throw new Error("Producto no encontrado");
+        setProduct(foundProduct);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -216,7 +220,7 @@ const ProductDetail = () => {
                       key={i}
                       style={{
                         color:
-                          i < Math.round(product.rating.rate)
+                          i < Math.round(product.rating)
                             ? "#fbbf24"
                             : "#e5e7eb",
                         fontSize: "1.2rem",
