@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { Container, Row, Col, Card, Form, Button, Alert } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Form,
+  Button,
+  Alert,
+} from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
@@ -8,11 +16,11 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  
+
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   // Obtener la ruta desde donde vino el usuario
   const from = location.state?.from?.pathname || "/";
 
@@ -124,7 +132,8 @@ const Login = () => {
                     }}
                     onFocus={(e) => {
                       e.target.style.borderColor = "#2563eb";
-                      e.target.style.boxShadow = "0 0 0 3px rgba(37, 99, 235, 0.1)";
+                      e.target.style.boxShadow =
+                        "0 0 0 3px rgba(37, 99, 235, 0.1)";
                     }}
                     onBlur={(e) => {
                       e.target.style.borderColor = "#e2e8f0";
@@ -159,7 +168,8 @@ const Login = () => {
                     }}
                     onFocus={(e) => {
                       e.target.style.borderColor = "#2563eb";
-                      e.target.style.boxShadow = "0 0 0 3px rgba(37, 99, 235, 0.1)";
+                      e.target.style.boxShadow =
+                        "0 0 0 3px rgba(37, 99, 235, 0.1)";
                     }}
                     onBlur={(e) => {
                       e.target.style.borderColor = "#e2e8f0";
@@ -196,13 +206,15 @@ const Login = () => {
                   onMouseEnter={(e) => {
                     if (!loading) {
                       e.target.style.transform = "translateY(-2px)";
-                      e.target.style.boxShadow = "0 8px 25px rgba(37, 99, 235, 0.4)";
+                      e.target.style.boxShadow =
+                        "0 8px 25px rgba(37, 99, 235, 0.4)";
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (!loading) {
                       e.target.style.transform = "translateY(0)";
-                      e.target.style.boxShadow = "0 4px 15px rgba(37, 99, 235, 0.3)";
+                      e.target.style.boxShadow =
+                        "0 4px 15px rgba(37, 99, 235, 0.3)";
                     }
                   }}
                 >
@@ -227,38 +239,6 @@ const Login = () => {
                   )}
                 </Button>
               </Form>
-
-              <div
-                style={{
-                  textAlign: "center",
-                  padding: "1rem",
-                  backgroundColor: "#f8fafc",
-                  borderRadius: "12px",
-                  marginTop: "1rem",
-                }}
-              >
-                <p
-                  style={{
-                    color: "#64748b",
-                    fontSize: "0.9rem",
-                    margin: "0 0 0.5rem 0",
-                    fontWeight: "500",
-                  }}
-                >
-                  💡 Datos de prueba:
-                </p>
-                <p
-                  style={{
-                    color: "#475569",
-                    fontSize: "0.85rem",
-                    margin: 0,
-                    fontFamily: "monospace",
-                  }}
-                >
-                  Email: cualquier@email.com<br />
-                  Contraseña: 123456
-                </p>
-              </div>
 
               <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
                 <Link
