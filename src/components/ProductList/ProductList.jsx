@@ -89,13 +89,13 @@ const ProductList = ({ products }) => {
                   style={{
                     width: "100%",
                     height: "220px",
-                    objectFit: "cover", // Asegura que la imagen cubra el área
+                    objectFit: "cover", 
                     padding: 0,
                     transition: "transform 0.3s ease",
                     backgroundColor: "transparent",
                     borderRadius: "16px 16px 0 0",
                     display: "block",
-                    overflow: "hidden", // Oculta el desbordamiento
+                    overflow: "hidden", 
                   }}
                   onMouseEnter={(e) => {
                     e.target.style.transform = "scale(1.05)";

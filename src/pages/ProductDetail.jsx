@@ -158,9 +158,16 @@ const ProductDetail = () => {
               fluid
               style={{
                 maxHeight: "500px",
-                objectFit: "contain",
+                minHeight: "300px",
                 width: "100%",
+                height: "220px",
+                objectFit: "cover",
+                padding: 0,
                 transition: "transform 0.3s ease",
+                backgroundColor: "transparent",
+                borderRadius: "16px 16px 0 0",
+                display: "block",
+                overflow: "hidden",
               }}
               onMouseEnter={(e) => {
                 e.target.style.transform = "scale(1.05)";
