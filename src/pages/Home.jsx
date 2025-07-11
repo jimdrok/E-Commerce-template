@@ -2,26 +2,17 @@
 
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { useEffect, useState } from "react";
 import bannerProduct from "../assets/bannerProduct.png";
 
 const Home = () => {
-  const getRandomImage = (category) => {
-    if (category === "men's clothing") {
-      return "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg";
-    }
-
-    if (category === "electronics") {
-      return "https://fakestoreapi.com/img/81QpkIctqPL._AC_SX679_.jpg";
-    }
-
-    if (category === "jewelery") {
-      return "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg";
-    }
-
-    if (category === "women's clothing") {
-      return "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg";
-    }
-  };
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    fetch("https://68706bd17ca4d06b34b6bcd6.mockapi.io/api/v1/categories")
+      .then((res) => res.json())
+      .then((data) => setCategories(data))
+      .catch(() => setCategories([]));
+  }, []);
 
   return (
     <div className="home-page">
@@ -148,16 +139,16 @@ const Home = () => {
               lo que buscas
             </p>
           </div>
-          <Row>
-            {[
-              "electronics",
-              "jewelery",
-              "men's clothing",
-              "women's clothing",
-            ].map((category, index) => (
-              <Col key={index} md={3} className="mb-4">
+          <Row className="justify-content-center">
+            {categories.map((cat) => (
+              <Col
+                key={cat.id}
+                md={3}
+                className="mb-4 d-flex align-items-stretch"
+              >
                 <Card
                   style={{
+                    width: "100%",
                     height: "100%",
                     border: "none",
                     borderRadius: "16px",
@@ -165,6 +156,9 @@ const Home = () => {
                     boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
                     transition: "all 0.3s ease",
                     cursor: "pointer",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = "translateY(-8px)";
@@ -180,26 +174,13 @@ const Home = () => {
                   <div style={{ position: "relative", overflow: "hidden" }}>
                     <Card.Img
                       variant="top"
-                      src={`${getRandomImage(category)}`}
+                      src={cat.image}
                       style={{
                         height: "200px",
                         objectFit: "cover",
                         transition: "transform 0.3s ease",
                       }}
                     />
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        background:
-                          "linear-gradient(45deg, rgba(30,58,138,0.8), rgba(59,130,246,0.6))",
-                        opacity: 0,
-                        transition: "opacity 0.3s ease",
-                      }}
-                    ></div>
                   </div>
                   <Card.Body
                     style={{
@@ -216,11 +197,11 @@ const Home = () => {
                         textTransform: "capitalize",
                       }}
                     >
-                      {category}
+                      {cat.name}
                     </h5>
                     <Button
                       as={Link}
-                      to={`/products?category=${category}`}
+                      to={`/products?category=${cat.name}`}
                       style={{
                         backgroundColor: "transparent",
                         color: "#2563eb",
