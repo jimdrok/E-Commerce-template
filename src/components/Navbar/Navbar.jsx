@@ -14,7 +14,7 @@ const NavigationBar = () => {
   const navLinks = [
     { to: "/", text: "Home" },
     { to: "/products", text: "Productos" },
-    { to: "/admin/products", text: "Admin", protected: true },
+    { to: "/admin/products", text: "Inventario", protected: true },
   ];
 
   const isActive = (path) => pathname === path;

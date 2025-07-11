@@ -108,7 +108,7 @@ const AdminProducts = () => {
               fontSize: "2rem",
             }}
           >
-            Administrar Productos
+            Gestión de Inventario
           </h1>
           <p
             style={{
@@ -117,7 +117,7 @@ const AdminProducts = () => {
               fontSize: "1rem",
             }}
           >
-            Gestiona tu catálogo de productos
+            Administra tu inventario de productos
           </p>
         </div>
         <Button
