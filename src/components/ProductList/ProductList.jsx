@@ -10,6 +10,18 @@ const ProductList = ({ products }) => {
   const { isAuthenticated } = useAuth();
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showLoginMessage, setShowLoginMessage] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 5;
+  const totalPages = Math.ceil(products.length / productsPerPage);
+
+  const startIdx = (currentPage - 1) * productsPerPage;
+  const endIdx = startIdx + productsPerPage;
+  const paginatedProducts = products.slice(startIdx, endIdx);
+
+  const goToPage = (page) => {
+    if (page < 1 || page > totalPages) return;
+    setCurrentPage(page);
+  };
 
   return (
     <Container className="my-4">
@@ -52,7 +64,7 @@ const ProductList = ({ products }) => {
         </Alert>
       )}
       <Row xs={1} md={2} lg={3} className="g-4">
-        {products.map((product) => (
+        {paginatedProducts.map((product) => (
           <Col key={product.id}>
             <Card
               className="h-100"
@@ -89,13 +101,13 @@ const ProductList = ({ products }) => {
                   style={{
                     width: "100%",
                     height: "220px",
-                    objectFit: "cover", 
+                    objectFit: "cover",
                     padding: 0,
                     transition: "transform 0.3s ease",
                     backgroundColor: "transparent",
                     borderRadius: "16px 16px 0 0",
                     display: "block",
-                    overflow: "hidden", 
+                    overflow: "hidden",
                   }}
                   onMouseEnter={(e) => {
                     e.target.style.transform = "scale(1.05)";
@@ -268,6 +280,68 @@ const ProductList = ({ products }) => {
           </Col>
         ))}
       </Row>
+      {/* Controles de paginación */}
+      {totalPages > 1 && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "2rem",
+            gap: "8px",
+          }}
+        >
+          <button
+            onClick={() => goToPage(currentPage - 1)}
+            disabled={currentPage === 1}
+            style={{
+              padding: "8px 16px",
+              borderRadius: "8px",
+              border: "1px solid #2563eb",
+              background: currentPage === 1 ? "#e5e7eb" : "#2563eb",
+              color: currentPage === 1 ? "#64748b" : "white",
+              fontWeight: "600",
+              cursor: currentPage === 1 ? "not-allowed" : "pointer",
+              transition: "all 0.2s",
+            }}
+          >
+            Anterior
+          </button>
+          {[...Array(totalPages)].map((_, idx) => (
+            <button
+              key={idx + 1}
+              onClick={() => goToPage(idx + 1)}
+              style={{
+                padding: "8px 12px",
+                borderRadius: "8px",
+                border: "1px solid #2563eb",
+                background: currentPage === idx + 1 ? "#2563eb" : "white",
+                color: currentPage === idx + 1 ? "white" : "#2563eb",
+                fontWeight: "600",
+                cursor: "pointer",
+                transition: "all 0.2s",
+              }}
+            >
+              {idx + 1}
+            </button>
+          ))}
+          <button
+            onClick={() => goToPage(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            style={{
+              padding: "8px 16px",
+              borderRadius: "8px",
+              border: "1px solid #2563eb",
+              background: currentPage === totalPages ? "#e5e7eb" : "#2563eb",
+              color: currentPage === totalPages ? "#64748b" : "white",
+              fontWeight: "600",
+              cursor: currentPage === totalPages ? "not-allowed" : "pointer",
+              transition: "all 0.2s",
+            }}
+          >
+            Siguiente
+          </button>
+        </div>
+      )}
     </Container>
   );
 };
