@@ -2,11 +2,14 @@
 import { Card, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
+import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
 
 const ProductList = ({ products }) => {
   const { addToCart } = useCart();
+  const { isAuthenticated } = useAuth();
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showLoginMessage, setShowLoginMessage] = useState(false);
 
   return (
     <Container className="my-4">
@@ -27,6 +30,25 @@ const ProductList = ({ products }) => {
         >
           <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>✅</div>
           <strong>¡Éxito!</strong> Se agregó tu producto al carrito
+        </Alert>
+      )}
+      {showLoginMessage && (
+        <Alert
+          style={{
+            backgroundColor: "#fef3c7",
+            border: "1px solid #fbbf24",
+            borderRadius: "16px",
+            padding: "1rem 1.5rem",
+            color: "#92400e",
+            fontSize: "1.1rem",
+            textAlign: "center",
+            marginBottom: "2rem",
+            position: "relative",
+            animation: "slideIn 0.3s ease-out",
+          }}
+        >
+          <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>🔒</div>
+          <strong>Inicia sesión</strong> para agregar productos al carrito
         </Alert>
       )}
       <Row xs={1} md={2} lg={3} className="g-4">
@@ -198,9 +220,14 @@ const ProductList = ({ products }) => {
                     <Button
                       className="w-100"
                       onClick={() => {
-                        addToCart(product);
-                        setShowSuccessMessage(true);
-                        setTimeout(() => setShowSuccessMessage(false), 3000);
+                        if (isAuthenticated()) {
+                          addToCart(product);
+                          setShowSuccessMessage(true);
+                          setTimeout(() => setShowSuccessMessage(false), 3000);
+                        } else {
+                          setShowLoginMessage(true);
+                          setTimeout(() => setShowLoginMessage(false), 3000);
+                        }
                       }}
                       style={{
                         background: "linear-gradient(45deg, #2563eb, #3b82f6)",

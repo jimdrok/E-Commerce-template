@@ -11,15 +11,18 @@ import {
   Alert,
 } from "react-bootstrap";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const { addToCart } = useCart();
+  const { isAuthenticated } = useAuth();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showLoginMessage, setShowLoginMessage] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -112,6 +115,25 @@ const ProductDetail = () => {
         >
           <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>✅</div>
           <strong>¡Éxito!</strong> Se agregó tu producto al carrito
+        </Alert>
+      )}
+      {showLoginMessage && (
+        <Alert
+          style={{
+            backgroundColor: "#fef3c7",
+            border: "1px solid #fbbf24",
+            borderRadius: "16px",
+            padding: "1rem 1.5rem",
+            color: "#92400e",
+            fontSize: "1.1rem",
+            textAlign: "center",
+            marginBottom: "2rem",
+            position: "relative",
+            animation: "slideIn 0.3s ease-out",
+          }}
+        >
+          <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>🔒</div>
+          <strong>Inicia sesión</strong> para agregar productos al carrito
         </Alert>
       )}
       <Row>
@@ -396,11 +418,16 @@ const ProductDetail = () => {
                 <Button
                   size="lg"
                   onClick={() => {
-                    for (let i = 0; i < selectedQuantity; i++) {
-                      addToCart(product);
+                    if (isAuthenticated()) {
+                      for (let i = 0; i < selectedQuantity; i++) {
+                        addToCart(product);
+                      }
+                      setShowSuccessMessage(true);
+                      setTimeout(() => setShowSuccessMessage(false), 3000);
+                    } else {
+                      setShowLoginMessage(true);
+                      setTimeout(() => setShowLoginMessage(false), 3000);
                     }
-                    setShowSuccessMessage(true);
-                    setTimeout(() => setShowSuccessMessage(false), 3000);
                   }}
                   style={{
                     background: "linear-gradient(45deg, #2563eb, #3b82f6)",
