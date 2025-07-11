@@ -280,7 +280,7 @@ const ProductList = ({ products }) => {
           </Col>
         ))}
       </Row>
-      {/* Controles de paginación */}
+
       {totalPages > 1 && (
         <div
           style={{
