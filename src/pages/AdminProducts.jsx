@@ -1,5 +1,15 @@
 import { useState } from "react";
-import { Container, Row, Col, Card, Button, Alert, Badge, Table, Spinner } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Alert,
+  Badge,
+  Table,
+  Spinner,
+} from "react-bootstrap";
 import { useProducts } from "../context/ProductContext";
 import ProductForm from "../components/ProductForm/ProductForm";
 import ConfirmationModal from "../components/ConfirmationModal/ConfirmationModal";
@@ -68,7 +78,7 @@ const AdminProducts = () => {
             height: "60px",
             borderWidth: "4px",
             color: "#2563eb",
-            marginBottom: "1.5rem"
+            marginBottom: "1.5rem",
           }}
         />
         <p
@@ -183,7 +193,9 @@ const AdminProducts = () => {
                 color: "#64748b",
               }}
             >
-              <div style={{ fontSize: "4rem", marginBottom: "1rem", opacity: 0.5 }}>
+              <div
+                style={{ fontSize: "4rem", marginBottom: "1rem", opacity: 0.5 }}
+              >
                 📦
               </div>
               <h3 style={{ color: "#1e293b", marginBottom: "1rem" }}>
@@ -217,28 +229,68 @@ const AdminProducts = () => {
                   }}
                 >
                   <tr>
-                    <th style={{ padding: "1rem", fontWeight: "600", color: "#1e293b" }}>
+                    <th
+                      style={{
+                        padding: "1rem",
+                        fontWeight: "600",
+                        color: "#1e293b",
+                      }}
+                    >
                       Producto
                     </th>
-                    <th style={{ padding: "1rem", fontWeight: "600", color: "#1e293b" }}>
+                    <th
+                      style={{
+                        padding: "1rem",
+                        fontWeight: "600",
+                        color: "#1e293b",
+                      }}
+                    >
                       Categoría
                     </th>
-                    <th style={{ padding: "1rem", fontWeight: "600", color: "#1e293b" }}>
+                    <th
+                      style={{
+                        padding: "1rem",
+                        fontWeight: "600",
+                        color: "#1e293b",
+                      }}
+                    >
                       Precio
                     </th>
-                    <th style={{ padding: "1rem", fontWeight: "600", color: "#1e293b" }}>
+                    <th
+                      style={{
+                        padding: "1rem",
+                        fontWeight: "600",
+                        color: "#1e293b",
+                      }}
+                    >
                       Descripción
                     </th>
-                    <th style={{ padding: "1rem", fontWeight: "600", color: "#1e293b", textAlign: "center" }}>
+                    <th
+                      style={{
+                        padding: "1rem",
+                        fontWeight: "600",
+                        color: "#1e293b",
+                        textAlign: "center",
+                      }}
+                    >
                       Acciones
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   {products.map((product) => (
-                    <tr key={product.id} style={{ borderBottom: "1px solid #f1f5f9" }}>
+                    <tr
+                      key={product.id}
+                      style={{ borderBottom: "1px solid #f1f5f9" }}
+                    >
                       <td style={{ padding: "1rem" }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "1rem",
+                          }}
+                        >
                           <div
                             style={{
                               width: "60px",
@@ -257,7 +309,10 @@ const AdminProducts = () => {
                               style={{
                                 width: "100%",
                                 height: "100%",
-                                objectFit: "contain",
+                                objectFit: "cover", // Asegura que la imagen cubra el área
+                                borderRadius: "8px",
+                                display: "block",
+                                overflow: "hidden", // Oculta el desbordamiento
                               }}
                             />
                           </div>
@@ -333,7 +388,13 @@ const AdminProducts = () => {
                         </p>
                       </td>
                       <td style={{ padding: "1rem", textAlign: "center" }}>
-                        <div style={{ display: "flex", gap: "0.5rem", justifyContent: "center" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            gap: "0.5rem",
+                            justifyContent: "center",
+                          }}
+                        >
                           <Button
                             size="sm"
                             onClick={() => handleEditProduct(product)}
