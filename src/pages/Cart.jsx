@@ -192,7 +192,10 @@ const CartPage = () => {
                             style={{
                               width: "100%",
                               height: "100%",
-                              objectFit: "contain",
+                              objectFit: "cover", // Ajuste para cubrir el componente
+                              borderRadius: "12px",
+                              display: "block",
+                              overflow: "hidden",
                             }}
                           />
                         </div>
@@ -220,7 +223,7 @@ const CartPage = () => {
                               fontSize: "1.1rem",
                             }}
                           >
-                            ${item.price.toFixed(2)}
+                            ${item.price}
                           </p>
                         </div>
                       </div>
