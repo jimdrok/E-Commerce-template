@@ -14,6 +14,7 @@ const NavigationBar = () => {
   const navLinks = [
     { to: "/", text: "Home" },
     { to: "/products", text: "Productos" },
+    { to: "/admin/products", text: "Admin", protected: true },
   ];
 
   const isActive = (path) => pathname === path;
@@ -96,7 +97,11 @@ const NavigationBar = () => {
 
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              {navLinks.map(({ to, text }) => (
+              {navLinks.map(({ to, text, protected: isProtected }) => {
+                // Solo mostrar enlaces protegidos si el usuario está autenticado
+                if (isProtected && !isAuthenticated()) return null;
+                
+                return (
                 <Nav.Link
                   key={to}
                   as={Link}
@@ -136,7 +141,8 @@ const NavigationBar = () => {
                     />
                   )}
                 </Nav.Link>
-              ))}
+              );
+              })}
             </Nav>
 
             {/* Carrito de compras en la derecha */}

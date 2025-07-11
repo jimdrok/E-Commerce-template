@@ -12,7 +12,9 @@ import Login from "./pages/Login";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
+import { ProductProvider } from "./context/ProductContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import AdminProducts from "./pages/AdminProducts";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,14 @@ const router = createBrowserRouter([
         ) 
       },
       { path: "/login", element: <Login /> },
+      { 
+        path: "/admin/products", 
+        element: (
+          <ProtectedRoute>
+            <AdminProducts />
+          </ProtectedRoute>
+        ) 
+      },
     ],
   },
 ]);
@@ -39,9 +49,11 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProvider>
-      <CartProvider>
-        <RouterProvider router={router} />
-      </CartProvider>
+      <ProductProvider>
+        <CartProvider>
+          <RouterProvider router={router} />
+        </CartProvider>
+      </ProductProvider>
     </AuthProvider>
   </React.StrictMode>
 );
