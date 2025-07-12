@@ -1,5 +1,5 @@
-import styled, { keyframes, css } from 'styled-components';
-import { Card, Button, Container, Alert, Badge, Navbar } from 'react-bootstrap';
+import styled, { keyframes, css } from "styled-components";
+import { Card, Button, Container, Alert, Badge, Navbar } from "react-bootstrap";
 
 // Animaciones
 export const pulse = keyframes`
@@ -48,7 +48,7 @@ export const HeroSection = styled.section`
   overflow: hidden;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -67,7 +67,7 @@ export const HeroContent = styled.div`
 export const HeroTitle = styled.h1`
   font-size: 3.5rem;
   font-weight: 700;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   margin-bottom: 1.5rem;
 
   @media (max-width: 768px) {
@@ -84,7 +84,7 @@ export const HeroImage = styled.div`
   position: relative;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   aspect-ratio: 16/10;
 
   img {
@@ -124,7 +124,8 @@ export const NavBrand = styled(Navbar.Brand)`
 `;
 
 export const NavLink = styled.a`
-  color: ${props => props.$isActive ? 'white' : 'rgba(255, 255, 255, 0.9)'} !important;
+  color: ${(props) =>
+    props.$isActive ? "white" : "rgba(255, 255, 255, 0.9)"} !important;
   font-weight: 500;
   font-size: 1rem;
   padding: 8px 16px;
@@ -134,8 +135,10 @@ export const NavLink = styled.a`
   text-decoration: none;
   position: relative;
   overflow: hidden;
-  background-color: ${props => props.$isActive ? 'rgba(149, 149, 149, 0.12)' : 'transparent'};
-  box-shadow: ${props => props.$isActive ? '0 2px 8px rgba(255, 255, 255, 0.2)' : 'none'};
+  background-color: ${(props) =>
+    props.$isActive ? "rgba(149, 149, 149, 0.12)" : "transparent"};
+  box-shadow: ${(props) =>
+    props.$isActive ? "0 2px 8px rgba(255, 255, 255, 0.2)" : "none"};
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.15) !important;
@@ -143,19 +146,21 @@ export const NavLink = styled.a`
     transform: translateY(-1px);
   }
 
-  ${props => props.$isActive && css`
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 4px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 24px;
-      height: 2px;
-      background-color: white;
-      border-radius: 2px;
-    }
-  `}
+  ${(props) =>
+    props.$isActive &&
+    css`
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 24px;
+        height: 2px;
+        background-color: white;
+        border-radius: 2px;
+      }
+    `}
 `;
 
 export const CartButton = styled.a`
@@ -165,7 +170,8 @@ export const CartButton = styled.a`
   transition: all 0.3s ease;
   text-decoration: none;
   position: relative;
-  background-color: ${props => props.$isActive ? 'rgba(149, 149, 149, 0.12)' : 'transparent'};
+  background-color: ${(props) =>
+    props.$isActive ? "rgba(149, 149, 149, 0.12)" : "transparent"};
   border: 2px solid rgba(255, 255, 255, 0.3);
   display: flex;
   align-items: center;
@@ -188,7 +194,12 @@ export const CartBadge = styled(Badge)`
   padding: 2px 6px;
   border: 2px solid white;
   box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
-  animation: ${props => props.$hasItems ? css`${pulse} 2s infinite` : 'none'};
+  animation: ${(props) =>
+    props.$hasItems
+      ? css`
+          ${pulse} 2s infinite
+        `
+      : "none"};
   position: absolute;
   top: -8px;
   right: -8px;
@@ -204,7 +215,7 @@ export const ProductCard = styled(Card)`
   border: none;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
   cursor: pointer;
   background-color: white;
@@ -212,7 +223,7 @@ export const ProductCard = styled(Card)`
 
   &:hover {
     transform: translateY(-8px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
   }
 `;
 
@@ -441,9 +452,16 @@ export const StyledFooter = styled.footer`
   overflow: hidden;
 
   &::before {
-    content: '';
+    content: "";
     height: 4px;
-    background: linear-gradient(90deg, #2563eb, #3b82f6, #60a5fa, #3b82f6, #2563eb);
+    background: linear-gradient(
+      90deg,
+      #2563eb,
+      #3b82f6,
+      #60a5fa,
+      #3b82f6,
+      #2563eb
+    );
     background-size: 200% 100%;
     animation: ${gradient} 3s ease infinite;
     position: absolute;
@@ -508,20 +526,6 @@ export const PromoSection = styled.section`
   padding: 40px 0;
   position: relative;
   overflow: hidden;
-
-  @media (max-width: 768px) {
-    padding: 30px 0;
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fillOpacity='0.03'%3E%3Cpath d='M20 20c0-11.046-8.954-20-20-20v20h20z'/%3E%3C/g%3E%3C/svg%3E");
-  }
 `;
 
 export const PromoContent = styled.div`

@@ -31,8 +31,11 @@ export const ProductProvider = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post(`${API_BASE_URL}/products`, productData);
-      setProducts(prev => [...prev, response.data]);
+      const response = await axios.post(
+        `${API_BASE_URL}/products`,
+        productData
+      );
+      setProducts((prev) => [...prev, response.data]);
       return { success: true, data: response.data };
     } catch (err) {
       const errorMessage = "Error al crear el producto: " + err.message;
@@ -49,11 +52,12 @@ export const ProductProvider = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.put(`${API_BASE_URL}/products/${id}`, productData);
-      setProducts(prev => 
-        prev.map(product => 
-          product.id === id ? response.data : product
-        )
+      const response = await axios.put(
+        `${API_BASE_URL}/products/${id}`,
+        productData
+      );
+      setProducts((prev) =>
+        prev.map((product) => (product.id === id ? response.data : product))
       );
       return { success: true, data: response.data };
     } catch (err) {
@@ -72,7 +76,7 @@ export const ProductProvider = ({ children }) => {
     setError(null);
     try {
       await axios.delete(`${API_BASE_URL}/products/${id}`);
-      setProducts(prev => prev.filter(product => product.id !== id));
+      setProducts((prev) => prev.filter((product) => product.id !== id));
       return { success: true };
     } catch (err) {
       const errorMessage = "Error al eliminar el producto: " + err.message;
@@ -86,7 +90,7 @@ export const ProductProvider = ({ children }) => {
 
   // Get product by ID
   const getProductById = (id) => {
-    return products.find(product => product.id === id);
+    return products.find((product) => product.id === id);
   };
 
   // Clear error
@@ -108,13 +112,11 @@ export const ProductProvider = ({ children }) => {
     updateProduct,
     deleteProduct,
     getProductById,
-    clearError
+    clearError,
   };
 
   return (
-    <ProductContext.Provider value={value}>
-      {children}
-    </ProductContext.Provider>
+    <ProductContext.Provider value={value}>{children}</ProductContext.Provider>
   );
 };
 
