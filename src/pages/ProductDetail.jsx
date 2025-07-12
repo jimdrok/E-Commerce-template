@@ -8,11 +8,19 @@ import {
   Image,
   Button,
   Badge,
-  Alert,
 } from "react-bootstrap";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { useProducts } from "../context/ProductContext";
+import { 
+  FiShoppingCart, 
+  FiTruck, 
+  FiStar,
+  FiMinus,
+  FiPlus,
+  FiCreditCard
+} from 'react-icons/fi';
+import { toast } from 'react-toastify';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -22,8 +30,6 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [showLoginMessage, setShowLoginMessage] = useState(false);
   const { products } = useProducts();
 
   useEffect(() => {
@@ -99,44 +105,6 @@ const ProductDetail = () => {
 
   return (
     <Container style={{ padding: "2rem 0", maxWidth: "1200px" }}>
-      {showSuccessMessage && (
-        <Alert
-          style={{
-            backgroundColor: "#dcfce7",
-            border: "1px solid #bbf7d0",
-            borderRadius: "16px",
-            padding: "1rem 1.5rem",
-            color: "#166534",
-            fontSize: "1.1rem",
-            textAlign: "center",
-            marginBottom: "2rem",
-            position: "relative",
-            animation: "slideIn 0.3s ease-out",
-          }}
-        >
-          <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>✅</div>
-          <strong>¡Éxito!</strong> Se agregó tu producto al carrito
-        </Alert>
-      )}
-      {showLoginMessage && (
-        <Alert
-          style={{
-            backgroundColor: "#fef3c7",
-            border: "1px solid #fbbf24",
-            borderRadius: "16px",
-            padding: "1rem 1.5rem",
-            color: "#92400e",
-            fontSize: "1.1rem",
-            textAlign: "center",
-            marginBottom: "2rem",
-            position: "relative",
-            animation: "slideIn 0.3s ease-out",
-          }}
-        >
-          <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>🔒</div>
-          <strong>Inicia sesión</strong> para agregar productos al carrito
-        </Alert>
-      )}
       <Row>
         {/* Columna de la imagen */}
         <Col md={6} className="mb-4">
@@ -220,7 +188,7 @@ const ProductDetail = () => {
               >
                 <div style={{ display: "flex", gap: "2px" }}>
                   {[...Array(5)].map((_, i) => (
-                    <span
+                    <FiStar
                       key={i}
                       style={{
                         color:
@@ -228,10 +196,9 @@ const ProductDetail = () => {
                             ? "#fbbf24"
                             : "#e5e7eb",
                         fontSize: "1.2rem",
+                        fill: i < Math.round(product.rating) ? "#fbbf24" : "none",
                       }}
-                    >
-                      ⭐
-                    </span>
+                    />
                   ))}
                 </div>
                 <span
@@ -286,9 +253,13 @@ const ProductDetail = () => {
                     borderRadius: "12px",
                     fontSize: "0.8rem",
                     fontWeight: "600",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px",
                   }}
                 >
-                  🚚 Envío gratis
+                  <FiTruck size={14} />
+                  Envío gratis
                 </div>
               </div>
               <p
@@ -375,7 +346,7 @@ const ProductDetail = () => {
                       fontWeight: "600",
                     }}
                   >
-                    -
+                    <FiMinus size={16} />
                   </Button>
                   <input
                     type="number"
@@ -410,7 +381,7 @@ const ProductDetail = () => {
                       fontWeight: "600",
                     }}
                   >
-                    +
+                    <FiPlus size={16} />
                   </Button>
                 </div>
               </div>
@@ -430,11 +401,17 @@ const ProductDetail = () => {
                       for (let i = 0; i < selectedQuantity; i++) {
                         addToCart(product);
                       }
-                      setShowSuccessMessage(true);
-                      setTimeout(() => setShowSuccessMessage(false), 3000);
+                      toast.success(`¡${selectedQuantity} ${product.title} agregado${selectedQuantity > 1 ? 's' : ''} al carrito!`, {
+                        icon: '🛒',
+                        position: "top-right",
+                        autoClose: 3000,
+                      });
                     } else {
-                      setShowLoginMessage(true);
-                      setTimeout(() => setShowLoginMessage(false), 3000);
+                      toast.warning('Inicia sesión para agregar productos al carrito', {
+                        icon: '🔒',
+                        position: "top-right",
+                        autoClose: 3000,
+                      });
                     }
                   }}
                   style={{
@@ -459,7 +436,8 @@ const ProductDetail = () => {
                       "0 8px 25px rgba(37, 99, 235, 0.3)";
                   }}
                 >
-                  🛒 Agregar al carrito
+                  <FiShoppingCart style={{ marginRight: '8px' }} />
+                  Agregar al carrito
                 </Button>
               </div>
             </div>

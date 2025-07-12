@@ -4,6 +4,14 @@ import { Link, useLocation } from "react-router-dom";
 import { Badge, Container, Nav, Navbar, Dropdown } from "react-bootstrap";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
+import { 
+  FiHome, 
+  FiPackage, 
+  FiShoppingCart, 
+  FiUser, 
+  FiLogOut,
+  FiArchive
+} from 'react-icons/fi';
 import {
   StyledNavbar,
   NavBrand,
@@ -19,9 +27,9 @@ const NavigationBar = () => {
 
   // Configuración para los enlaces principales (sin carrito)
   const navLinks = [
-    { to: "/", text: "Home" },
-    { to: "/products", text: "Productos" },
-    { to: "/admin/products", text: "Inventario", protected: true },
+    { to: "/", text: "Home", icon: FiHome },
+    { to: "/products", text: "Productos", icon: FiPackage },
+    { to: "/admin/products", text: "Inventario", icon: FiArchive, protected: true },
   ];
 
   const isActive = (path) => pathname === path;
@@ -45,7 +53,7 @@ const NavigationBar = () => {
 
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              {navLinks.map(({ to, text, protected: isProtected }) => {
+              {navLinks.map(({ to, text, icon: Icon, protected: isProtected }) => {
                 // Solo mostrar enlaces protegidos si el usuario está autenticado
                 if (isProtected && !isAuthenticated()) return null;
                 
@@ -56,6 +64,7 @@ const NavigationBar = () => {
                   href={to}
                   $isActive={isActive(to)}
                 >
+                  <Icon style={{ marginRight: '8px', fontSize: '1.1rem' }} />
                   {text}
                   {isActive(to) && (
                     <div
@@ -86,20 +95,7 @@ const NavigationBar = () => {
                     href="/cart"
                     $isActive={pathname === "/cart"}
                   >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <circle cx="9" cy="21" r="1"></circle>
-                      <circle cx="20" cy="21" r="1"></circle>
-                      <path d="m1 1 4 4 2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                    </svg>
+                    <FiShoppingCart size={20} />
                     {totalItems > 0 && (
                       <CartBadge pill $hasItems={totalItems > 0}>
                         {totalItems}
@@ -195,7 +191,8 @@ const NavigationBar = () => {
                           gap: "0.5rem",
                         }}
                       >
-                        🛒 Mi Carrito
+                        <FiShoppingCart size={16} />
+                        Mi Carrito
                         {totalItems > 0 && (
                           <Badge
                             pill
@@ -220,7 +217,8 @@ const NavigationBar = () => {
                           gap: "0.5rem",
                         }}
                       >
-                        🚪 Cerrar Sesión
+                        <FiLogOut size={16} />
+                        Cerrar Sesión
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
@@ -253,6 +251,7 @@ const NavigationBar = () => {
                     e.target.style.transform = "translateY(0)";
                   }}
                 >
+                  <FiUser style={{ marginRight: '8px', fontSize: '1rem' }} />
                   Iniciar Sesión
                 </Nav.Link>
               )}

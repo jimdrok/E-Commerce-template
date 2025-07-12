@@ -2,6 +2,14 @@
 import { Button, Badge, Container, Row, Col, Card } from "react-bootstrap";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
+import { 
+  FiShoppingCart, 
+  FiTrash2, 
+  FiMinus, 
+  FiPlus,
+  FiCreditCard,
+  FiPackage
+} from 'react-icons/fi';
 
 const CartPage = () => {
   const {
@@ -33,7 +41,7 @@ const CartPage = () => {
             padding: "3rem 2rem",
             boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
             maxWidth: "500px",
-            width: "100%",
+          <FiShoppingCart size={64} />
           }}
         >
           <div
@@ -259,7 +267,7 @@ const CartPage = () => {
                             fontWeight: "600",
                           }}
                         >
-                          -
+                          <FiMinus size={14} />
                         </Button>
                         <input
                           type="number"
@@ -299,7 +307,7 @@ const CartPage = () => {
                             fontWeight: "600",
                           }}
                         >
-                          +
+                          <FiPlus size={14} />
                         </Button>
                       </div>
                     </Col>
@@ -339,7 +347,8 @@ const CartPage = () => {
                             e.target.style.color = "#ef4444";
                           }}
                         >
-                          🗑️ Eliminar
+                          <FiTrash2 style={{ marginRight: '4px' }} size={14} />
+                          Eliminar
                         </Button>
                       </div>
                     </Col>
@@ -445,7 +454,8 @@ const CartPage = () => {
                       "0 4px 15px rgba(16, 185, 129, 0.3)";
                   }}
                 >
-                  💳 Finalizar Compra
+                  <FiCreditCard style={{ marginRight: '8px' }} />
+                  Finalizar Compra
                 </Button>
 
                 <Button
@@ -469,7 +479,8 @@ const CartPage = () => {
                     e.target.style.color = "#ef4444";
                   }}
                 >
-                  🗑️ Vaciar Carrito
+                  <FiTrash2 style={{ marginRight: '8px' }} />
+                  Vaciar Carrito
                 </Button>
               </div>
             </Card.Body>

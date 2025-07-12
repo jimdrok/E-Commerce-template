@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'react-toastify/dist/ReactToastify.css';
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
@@ -15,6 +16,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { ProductProvider } from "./context/ProductContext";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import AdminProducts from "./pages/AdminProducts";
+import { ToastContainer } from 'react-toastify';
 
 const router = createBrowserRouter([
   {
@@ -52,6 +54,19 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <ProductProvider>
         <CartProvider>
           <RouterProvider router={router} />
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            style={{ zIndex: 9999 }}
+          />
         </CartProvider>
       </ProductProvider>
     </AuthProvider>

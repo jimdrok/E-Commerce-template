@@ -10,6 +10,8 @@ import {
   Alert,
 } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
+import { FiUser, FiLock, FiArrowLeft } from 'react-icons/fi';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -31,9 +33,19 @@ const Login = () => {
 
     try {
       await login(email, password);
+      toast.success('¡Bienvenido! Has iniciado sesión correctamente', {
+        icon: '👋',
+        position: "top-right",
+        autoClose: 3000,
+      });
       navigate(from, { replace: true });
     } catch (err) {
       setError(err.message);
+      toast.error(err.message, {
+        icon: '❌',
+        position: "top-right",
+        autoClose: 4000,
+      });
     } finally {
       setLoading(false);
     }
@@ -113,8 +125,12 @@ const Login = () => {
                       fontWeight: "600",
                       color: "#1e293b",
                       marginBottom: "0.5rem",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.5rem",
                     }}
                   >
+                    <FiUser size={16} />
                     Email
                   </Form.Label>
                   <Form.Control
@@ -148,8 +164,12 @@ const Login = () => {
                       fontWeight: "600",
                       color: "#1e293b",
                       marginBottom: "0.5rem",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.5rem",
                     }}
                   >
+                    <FiLock size={16} />
                     Contraseña
                   </Form.Label>
                   <Form.Control
@@ -256,7 +276,8 @@ const Login = () => {
                     e.target.style.textDecoration = "none";
                   }}
                 >
-                  ← Volver al inicio
+                  <FiArrowLeft style={{ marginRight: '4px' }} />
+                  Volver al inicio
                 </Link>
               </div>
             </Card.Body>

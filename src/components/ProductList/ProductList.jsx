@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
+import { FiEye, FiShoppingCart, FiTruck } from 'react-icons/fi';
+import { toast } from 'react-toastify';
 import {
   ProductCard,
   ProductImageContainer,
@@ -22,8 +24,6 @@ import {
 const ProductList = ({ products }) => {
   const { addToCart } = useCart();
   const { isAuthenticated } = useAuth();
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [showLoginMessage, setShowLoginMessage] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 5;
   const totalPages = Math.ceil(products.length / productsPerPage);
@@ -39,18 +39,6 @@ const ProductList = ({ products }) => {
 
   return (
     <Container className="my-4">
-      {showSuccessMessage && (
-        <SuccessAlert>
-          <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>✅</div>
-          <strong>¡Éxito!</strong> Se agregó tu producto al carrito
-        </SuccessAlert>
-      )}
-      {showLoginMessage && (
-        <WarningAlert>
-          <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>🔒</div>
-          <strong>Inicia sesión</strong> para agregar productos al carrito
-        </WarningAlert>
-      )}
       <Row xs={1} md={2} lg={3} className="g-4">
         {paginatedProducts.map((product) => (
           <Col key={product.id}>
@@ -83,6 +71,7 @@ const ProductList = ({ products }) => {
                       ${product.price}
                     </ProductPrice>
                     <ShippingBadge>
+                      <FiTruck style={{ marginRight: '4px' }} />
                       Envío gratis
                     </ShippingBadge>
                   </div>
@@ -98,6 +87,7 @@ const ProductList = ({ products }) => {
                       as={Link}
                       to={`/products/${product.id}`}
                     >
+                      <FiEye style={{ marginRight: '8px' }} />
                       Ver Detalles
                     </SecondaryButton>
 
@@ -106,15 +96,22 @@ const ProductList = ({ products }) => {
                       onClick={() => {
                         if (isAuthenticated()) {
                           addToCart(product);
-                          setShowSuccessMessage(true);
-                          setTimeout(() => setShowSuccessMessage(false), 3000);
+                          toast.success(`¡${product.title} agregado al carrito!`, {
+                            icon: '🛒',
+                            position: "top-right",
+                            autoClose: 3000,
+                          });
                         } else {
-                          setShowLoginMessage(true);
-                          setTimeout(() => setShowLoginMessage(false), 3000);
+                          toast.warning('Inicia sesión para agregar productos al carrito', {
+                            icon: '🔒',
+                            position: "top-right",
+                            autoClose: 3000,
+                          });
                         }
                       }}
                     >
-                      🛒 Agregar al carrito
+                      <FiShoppingCart style={{ marginRight: '8px' }} />
+                      Agregar al carrito
                     </AddToCartButton>
                   </div>
                 </div>
