@@ -2,24 +2,10 @@
 import { Button, Badge, Container, Row, Col, Card } from "react-bootstrap";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
-import { 
-  FiShoppingCart, 
-  FiTrash2, 
-  FiMinus, 
-  FiPlus,
-  FiCreditCard,
-  FiPackage
-} from 'react-icons/fi';
+import { FiShoppingCart } from "react-icons/fi";
 
 const CartPage = () => {
-  const {
-    cart,
-    removeFromCart,
-    updateQuantity,
-    totalPrice,
-    totalItems,
-    clearCart,
-  } = useCart();
+  const { cart } = useCart();
 
   if (cart.length === 0) {
     return (
@@ -41,9 +27,9 @@ const CartPage = () => {
             padding: "3rem 2rem",
             boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
             maxWidth: "500px",
-          <FiShoppingCart size={64} />
           }}
         >
+          <FiShoppingCart size={64} />
           <div
             style={{
               fontSize: "4rem",
@@ -347,7 +333,7 @@ const CartPage = () => {
                             e.target.style.color = "#ef4444";
                           }}
                         >
-                          <FiTrash2 style={{ marginRight: '4px' }} size={14} />
+                          <FiTrash2 style={{ marginRight: "4px" }} size={14} />
                           Eliminar
                         </Button>
                       </div>
@@ -454,7 +440,7 @@ const CartPage = () => {
                       "0 4px 15px rgba(16, 185, 129, 0.3)";
                   }}
                 >
-                  <FiCreditCard style={{ marginRight: '8px' }} />
+                  <FiCreditCard style={{ marginRight: "8px" }} />
                   Finalizar Compra
                 </Button>
 
@@ -479,7 +465,7 @@ const CartPage = () => {
                     e.target.style.color = "#ef4444";
                   }}
                 >
-                  <FiTrash2 style={{ marginRight: '8px' }} />
+                  <FiTrash2 style={{ marginRight: "8px" }} />
                   Vaciar Carrito
                 </Button>
               </div>

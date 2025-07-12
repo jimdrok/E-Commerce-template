@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Modal, Form, Button, Alert, Row, Col } from "react-bootstrap";
 import { useProducts } from "../../context/ProductContext";
-import { FiSave, FiX } from 'react-icons/fi';
-import { toast } from 'react-toastify';
+import { FiSave, FiX } from "react-icons/fi";
+import { toast } from "react-toastify";
 
 const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
   const { createProduct, updateProduct, loading } = useProducts();
@@ -11,7 +11,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
     price: "",
     description: "",
     category: "",
-    image: ""
+    image: "",
   });
   const [errors, setErrors] = useState({});
   const [submitError, setSubmitError] = useState("");
@@ -28,7 +28,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
           price: product.price?.toString() || "",
           description: product.description || "",
           category: product.category || "",
-          image: product.image || ""
+          image: product.image || "",
         });
       } else {
         setFormData({
@@ -36,7 +36,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
           price: "",
           description: "",
           category: "",
-          image: ""
+          image: "",
         });
       }
       setErrors({});
@@ -63,7 +63,8 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
     if (!formData.description.trim()) {
       newErrors.description = "La descripción es obligatoria";
     } else if (formData.description.trim().length < 10) {
-      newErrors.description = "La descripción debe tener al menos 10 caracteres";
+      newErrors.description =
+        "La descripción debe tener al menos 10 caracteres";
     }
 
     // Categoría obligatoria
@@ -91,16 +92,16 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
 
     // Clear error for this field when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
@@ -119,7 +120,9 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
       price: parseFloat(formData.price),
       description: formData.description.trim(),
       category: formData.category.trim(),
-      image: formData.image.trim() || "https://via.placeholder.com/300x300?text=Producto"
+      image:
+        formData.image.trim() ||
+        "https://via.placeholder.com/300x300?text=Producto",
     };
 
     try {
@@ -132,23 +135,23 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
 
       if (result.success) {
         setSubmitSuccess(
-          isEditing 
-            ? "¡Producto actualizado exitosamente!" 
+          isEditing
+            ? "¡Producto actualizado exitosamente!"
             : "¡Producto creado exitosamente!"
         );
-        
+
         // Toast notification
         toast.success(
-          isEditing 
+          isEditing
             ? `Producto "${productData.title}" actualizado correctamente`
             : `Producto "${productData.title}" creado correctamente`,
           {
-            icon: isEditing ? '✏️' : '✅',
+            icon: isEditing ? "✏️" : "✅",
             position: "top-right",
             autoClose: 3000,
           }
         );
-        
+
         // Call success callback and close modal after a short delay
         setTimeout(() => {
           onSuccess && onSuccess(result.data);
@@ -157,7 +160,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
       } else {
         setSubmitError(result.error);
         toast.error(result.error, {
-          icon: '❌',
+          icon: "❌",
           position: "top-right",
           autoClose: 4000,
         });
@@ -165,7 +168,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
     } catch (error) {
       setSubmitError("Error inesperado: " + error.message);
       toast.error("Error inesperado: " + error.message, {
-        icon: '❌',
+        icon: "❌",
         position: "top-right",
         autoClose: 4000,
       });
@@ -174,35 +177,35 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
 
   const categories = [
     "electronics",
-    "jewelery", 
+    "jewelery",
     "men's clothing",
     "women's clothing",
     "books",
     "home & garden",
     "sports",
-    "toys"
+    "toys",
   ];
 
   return (
-    <Modal 
-      show={show} 
-      onHide={onHide} 
+    <Modal
+      show={show}
+      onHide={onHide}
       size="lg"
       backdrop="static"
       keyboard={false}
     >
-      <Modal.Header 
+      <Modal.Header
         closeButton
         style={{
           backgroundColor: "#f8fafc",
-          borderBottom: "1px solid #e2e8f0"
+          borderBottom: "1px solid #e2e8f0",
         }}
       >
         <Modal.Title
           style={{
             color: "#1e293b",
             fontWeight: "700",
-            fontSize: "1.5rem"
+            fontSize: "1.5rem",
           }}
         >
           {isEditing ? "Editar Producto" : "Agregar Nuevo Producto"}
@@ -211,14 +214,14 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
 
       <Modal.Body style={{ padding: "2rem" }}>
         {submitError && (
-          <Alert 
+          <Alert
             variant="danger"
             style={{
               borderRadius: "12px",
               border: "1px solid #fecaca",
               backgroundColor: "#fef2f2",
               color: "#dc2626",
-              marginBottom: "1.5rem"
+              marginBottom: "1.5rem",
             }}
           >
             <div style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>⚠️</div>
@@ -227,14 +230,14 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
         )}
 
         {submitSuccess && (
-          <Alert 
+          <Alert
             variant="success"
             style={{
               borderRadius: "12px",
               border: "1px solid #bbf7d0",
               backgroundColor: "#dcfce7",
               color: "#166534",
-              marginBottom: "1.5rem"
+              marginBottom: "1.5rem",
             }}
           >
             <div style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>✅</div>
@@ -250,7 +253,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
                   style={{
                     fontWeight: "600",
                     color: "#1e293b",
-                    marginBottom: "0.5rem"
+                    marginBottom: "0.5rem",
                   }}
                 >
                   Nombre del Producto *
@@ -266,7 +269,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
                     borderRadius: "12px",
                     border: "2px solid #e2e8f0",
                     padding: "12px 16px",
-                    fontSize: "1rem"
+                    fontSize: "1rem",
                   }}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -281,7 +284,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
                   style={{
                     fontWeight: "600",
                     color: "#1e293b",
-                    marginBottom: "0.5rem"
+                    marginBottom: "0.5rem",
                   }}
                 >
                   Precio *
@@ -299,7 +302,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
                     borderRadius: "12px",
                     border: "2px solid #e2e8f0",
                     padding: "12px 16px",
-                    fontSize: "1rem"
+                    fontSize: "1rem",
                   }}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -316,7 +319,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
                   style={{
                     fontWeight: "600",
                     color: "#1e293b",
-                    marginBottom: "0.5rem"
+                    marginBottom: "0.5rem",
                   }}
                 >
                   Categoría *
@@ -330,11 +333,11 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
                     borderRadius: "12px",
                     border: "2px solid #e2e8f0",
                     padding: "12px 16px",
-                    fontSize: "1rem"
+                    fontSize: "1rem",
                   }}
                 >
                   <option value="">Seleccionar categoría</option>
-                  {categories.map(cat => (
+                  {categories.map((cat) => (
                     <option key={cat} value={cat}>
                       {cat.charAt(0).toUpperCase() + cat.slice(1)}
                     </option>
@@ -352,7 +355,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
                   style={{
                     fontWeight: "600",
                     color: "#1e293b",
-                    marginBottom: "0.5rem"
+                    marginBottom: "0.5rem",
                   }}
                 >
                   URL de Imagen
@@ -368,14 +371,15 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
                     borderRadius: "12px",
                     border: "2px solid #e2e8f0",
                     padding: "12px 16px",
-                    fontSize: "1rem"
+                    fontSize: "1rem",
                   }}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.image}
                 </Form.Control.Feedback>
                 <Form.Text style={{ color: "#64748b", fontSize: "0.85rem" }}>
-                  Opcional - Se usará una imagen por defecto si no se proporciona
+                  Opcional - Se usará una imagen por defecto si no se
+                  proporciona
                 </Form.Text>
               </Form.Group>
             </Col>
@@ -386,7 +390,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
               style={{
                 fontWeight: "600",
                 color: "#1e293b",
-                marginBottom: "0.5rem"
+                marginBottom: "0.5rem",
               }}
             >
               Descripción *
@@ -404,7 +408,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
                 border: "2px solid #e2e8f0",
                 padding: "12px 16px",
                 fontSize: "1rem",
-                resize: "vertical"
+                resize: "vertical",
               }}
             />
             <Form.Control.Feedback type="invalid">
@@ -421,7 +425,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
         style={{
           backgroundColor: "#f8fafc",
           borderTop: "1px solid #e2e8f0",
-          padding: "1.5rem 2rem"
+          padding: "1.5rem 2rem",
         }}
       >
         <Button
@@ -433,7 +437,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
             padding: "10px 24px",
             fontWeight: "600",
             backgroundColor: "#6b7280",
-            border: "none"
+            border: "none",
           }}
         >
           Cancelar
@@ -448,11 +452,12 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
             borderRadius: "25px",
             padding: "10px 24px",
             fontWeight: "600",
-          <FiX style={{ marginRight: '4px' }} />
+
             color: "white",
-            boxShadow: "0 4px 15px rgba(37, 99, 235, 0.3)"
+            boxShadow: "0 4px 15px rgba(37, 99, 235, 0.3)",
           }}
         >
+          <FiX style={{ marginRight: "4px" }} />
           {loading ? (
             <>
               <span
@@ -464,14 +469,14 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
                   borderTop: "2px solid white",
                   borderRadius: "50%",
                   animation: "spin 1s linear infinite",
-                  marginRight: "8px"
+                  marginRight: "8px",
                 }}
               ></span>
               {isEditing ? "Actualizando..." : "Creando..."}
             </>
           ) : (
             <>
-              <FiSave style={{ marginRight: '8px' }} />
+              <FiSave style={{ marginRight: "8px" }} />
               {isEditing ? "Actualizar Producto" : "Crear Producto"}
             </>
           )}
