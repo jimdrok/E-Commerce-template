@@ -254,7 +254,7 @@ const AdminProducts = () => {
             </div>
           ) : (
             <div style={{ overflowX: "auto" }}>
-              <Table responsive hover style={{ margin: 0 }}>
+              <Table responsive hover style={{ margin: 0, minWidth: "800px" }}>
                 <thead
                   style={{
                     backgroundColor: "#f8fafc",
@@ -267,6 +267,7 @@ const AdminProducts = () => {
                         padding: "1rem",
                         fontWeight: "600",
                         color: "#1e293b",
+                        minWidth: "200px"
                       }}
                     >
                       Producto
@@ -276,6 +277,7 @@ const AdminProducts = () => {
                         padding: "1rem",
                         fontWeight: "600",
                         color: "#1e293b",
+                        minWidth: "120px"
                       }}
                     >
                       Categoría
@@ -285,6 +287,7 @@ const AdminProducts = () => {
                         padding: "1rem",
                         fontWeight: "600",
                         color: "#1e293b",
+                        minWidth: "100px"
                       }}
                     >
                       Precio
@@ -294,6 +297,7 @@ const AdminProducts = () => {
                         padding: "1rem",
                         fontWeight: "600",
                         color: "#1e293b",
+                        minWidth: "250px"
                       }}
                     >
                       Descripción
@@ -304,6 +308,7 @@ const AdminProducts = () => {
                         fontWeight: "600",
                         color: "#1e293b",
                         textAlign: "center",
+                        minWidth: "180px"
                       }}
                     >
                       Acciones

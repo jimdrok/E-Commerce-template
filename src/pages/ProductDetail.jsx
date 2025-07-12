@@ -107,7 +107,7 @@ const ProductDetail = () => {
     <Container style={{ padding: "2rem 0", maxWidth: "1200px" }}>
       <Row>
         {/* Columna de la imagen */}
-        <Col md={6} className="mb-4">
+        <Col lg={6} md={12} className="mb-4">
           <div
             style={{
               backgroundColor: "white",
@@ -145,7 +145,7 @@ const ProductDetail = () => {
         </Col>
 
         {/* Columna de la información */}
-        <Col md={6}>
+        <Col lg={6} md={12}>
           <div style={{ padding: "1rem 0" }}>
             {/* Título */}
             <h1

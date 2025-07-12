@@ -39,7 +39,7 @@ const ProductList = ({ products }) => {
 
   return (
     <Container className="my-4">
-      <Row xs={1} md={2} lg={3} className="g-4">
+      <Row xs={1} sm={2} md={2} lg={3} xl={4} className="g-4">
         {paginatedProducts.map((product) => (
           <Col key={product.id}>
             <ProductCard className="h-100">

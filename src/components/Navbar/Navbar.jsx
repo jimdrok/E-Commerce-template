@@ -4,13 +4,17 @@ import { Link, useLocation } from "react-router-dom";
 import { Badge, Container, Nav, Navbar, Dropdown } from "react-bootstrap";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
+import { useState } from "react";
+import { slide as Menu } from 'react-burger-menu';
 import { 
   FiHome, 
   FiPackage, 
   FiShoppingCart, 
   FiUser, 
   FiLogOut,
-  FiArchive
+  FiArchive,
+  FiMenu,
+  FiX
 } from 'react-icons/fi';
 import {
   StyledNavbar,
@@ -24,8 +28,9 @@ const NavigationBar = () => {
   const { totalItems } = useCart();
   const { user, logout, isAuthenticated } = useAuth();
   const { pathname } = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Configuración para los enlaces principales (sin carrito)
+  // Configuración para los enlaces principales
   const navLinks = [
     { to: "/", text: "Home", icon: FiHome },
     { to: "/products", text: "Productos", icon: FiPackage },
@@ -34,27 +39,84 @@ const NavigationBar = () => {
 
   const isActive = (path) => pathname === path;
 
+  const handleMenuToggle = (state) => {
+    setIsMenuOpen(state.isOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+    closeMenu();
+  };
+
+  // Estilos para el drawer
+  const drawerStyles = {
+    bmBurgerButton: {
+      display: 'none' // Lo ocultamos porque usamos nuestro botón personalizado
+    },
+    bmCrossButton: {
+      height: '24px',
+      width: '24px',
+      right: '20px',
+      top: '20px'
+    },
+    bmCross: {
+      background: '#ffffff',
+      height: '2px',
+      width: '2px'
+    },
+    bmMenuWrap: {
+      position: 'fixed',
+      height: '100%',
+      top: 0,
+      left: 0
+    },
+    bmMenu: {
+      background: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)',
+      padding: '2.5em 1.5em 0',
+      fontSize: '1.15em',
+      overflow: 'hidden'
+    },
+    bmMorphShape: {
+      fill: '#373a47'
+    },
+    bmItemList: {
+      color: '#ffffff',
+      padding: '0.8em'
+    },
+    bmItem: {
+      display: 'block',
+      color: '#ffffff',
+      textDecoration: 'none',
+      marginBottom: '1rem',
+      padding: '12px 16px',
+      borderRadius: '12px',
+      transition: 'all 0.3s ease',
+      fontSize: '1rem',
+      fontWeight: '500'
+    },
+    bmOverlay: {
+      background: 'rgba(0, 0, 0, 0.3)',
+      top: 0,
+      left: 0
+    }
+  };
+
   return (
     <>
-      <StyledNavbar expand="lg">
+      {/* Desktop Navbar */}
+      <StyledNavbar expand="lg" className="d-none d-lg-flex">
         <Container>
           <NavBrand as={Link} to="/">
             PedroShop
           </NavBrand>
 
-          <Navbar.Toggle
-            aria-controls="basic-navbar-nav"
-            style={{
-              border: "2px solid rgba(255, 255, 255, 0.3)",
-              borderRadius: "8px",
-              padding: "4px 8px",
-            }}
-          />
-
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               {navLinks.map(({ to, text, icon: Icon, protected: isProtected }) => {
-                // Solo mostrar enlaces protegidos si el usuario está autenticado
                 if (isProtected && !isAuthenticated()) return null;
                 
                 return (
@@ -85,11 +147,9 @@ const NavigationBar = () => {
               })}
             </Nav>
 
-            {/* Carrito de compras en la derecha */}
             <Nav>
               {isAuthenticated() ? (
                 <>
-                  {/* Carrito - solo visible para usuarios autenticados */}
                   <Nav.Link
                     as={CartButton}
                     href="/cart"
@@ -103,7 +163,6 @@ const NavigationBar = () => {
                     )}
                   </Nav.Link>
 
-                  {/* Dropdown del usuario */}
                   <Dropdown align="end">
                     <Dropdown.Toggle
                       variant="link"
@@ -120,16 +179,6 @@ const NavigationBar = () => {
                         width: "48px",
                         height: "48px",
                         marginLeft: "0.5rem",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.target.style.backgroundColor = "rgba(255, 255, 255, 0.15)";
-                        e.target.style.borderColor = "rgba(255, 255, 255, 0.5)";
-                        e.target.style.transform = "scale(1.1)";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.target.style.backgroundColor = "transparent";
-                        e.target.style.borderColor = "rgba(255, 255, 255, 0.3)";
-                        e.target.style.transform = "scale(1)";
                       }}
                     >
                       <img
@@ -224,7 +273,6 @@ const NavigationBar = () => {
                   </Dropdown>
                 </>
               ) : (
-                /* Botón de login para usuarios no autenticados */
                 <Nav.Link
                   as={Link}
                   to="/login"
@@ -240,16 +288,6 @@ const NavigationBar = () => {
                     textDecoration: "none",
                     marginLeft: "0.5rem",
                   }}
-                  onMouseEnter={(e) => {
-                    e.target.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
-                    e.target.style.borderColor = "rgba(255, 255, 255, 0.5)";
-                    e.target.style.transform = "translateY(-1px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
-                    e.target.style.borderColor = "rgba(255, 255, 255, 0.3)";
-                    e.target.style.transform = "translateY(0)";
-                  }}
                 >
                   <FiUser style={{ marginRight: '8px', fontSize: '1rem' }} />
                   Iniciar Sesión
@@ -259,6 +297,243 @@ const NavigationBar = () => {
           </Navbar.Collapse>
         </Container>
       </StyledNavbar>
+
+      {/* Mobile/Tablet Header */}
+      <div className="d-flex d-lg-none" style={{
+        background: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)',
+        padding: '1rem',
+        position: 'sticky',
+        top: 0,
+        zIndex: 1000,
+        boxShadow: '0 4px 20px rgba(30, 58, 138, 0.15)'
+      }}>
+        <Container className="d-flex justify-content-between align-items-center">
+          <NavBrand as={Link} to="/" style={{ margin: 0 }}>
+            PedroShop
+          </NavBrand>
+          
+          <button
+            onClick={() => setIsMenuOpen(true)}
+            style={{
+              background: 'transparent',
+              border: '2px solid rgba(255, 255, 255, 0.3)',
+              borderRadius: '8px',
+              color: 'white',
+              padding: '8px',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+              e.target.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = 'transparent';
+              e.target.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            }}
+          >
+            <FiMenu size={24} />
+          </button>
+        </Container>
+      </div>
+
+      {/* Mobile/Tablet Drawer Menu */}
+      <Menu 
+        isOpen={isMenuOpen}
+        onStateChange={handleMenuToggle}
+        styles={drawerStyles}
+        width={'280px'}
+        className="d-flex d-lg-none"
+      >
+        {/* User Section */}
+        {isAuthenticated() ? (
+          <div style={{
+            padding: '1rem 0 2rem 0',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+            marginBottom: '1rem'
+          }}>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1rem',
+              marginBottom: '1rem'
+            }}>
+              <img
+                src={user?.avatar}
+                alt={user?.name}
+                style={{
+                  width: '48px',
+                  height: '48px',
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  border: '2px solid rgba(255, 255, 255, 0.3)'
+                }}
+              />
+              <div>
+                <div style={{
+                  color: 'white',
+                  fontWeight: '600',
+                  fontSize: '1rem'
+                }}>
+                  {user?.name}
+                </div>
+                <div style={{
+                  color: 'rgba(255, 255, 255, 0.7)',
+                  fontSize: '0.85rem'
+                }}>
+                  {user?.email}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div style={{
+            padding: '1rem 0 2rem 0',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+            marginBottom: '1rem'
+          }}>
+            <Link
+              to="/login"
+              onClick={closeMenu}
+              style={{
+                color: 'white',
+                textDecoration: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '12px 16px',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                borderRadius: '12px',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              <FiUser size={20} />
+              <span style={{ fontWeight: '600' }}>Iniciar Sesión</span>
+            </Link>
+          </div>
+        )}
+
+        {/* Navigation Links */}
+        {navLinks.map(({ to, text, icon: Icon, protected: isProtected }) => {
+          if (isProtected && !isAuthenticated()) return null;
+          
+          return (
+            <Link
+              key={to}
+              to={to}
+              onClick={closeMenu}
+              style={{
+                ...drawerStyles.bmItem,
+                backgroundColor: isActive(to) ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.75rem'
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive(to)) {
+                  e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive(to)) {
+                  e.target.style.backgroundColor = 'transparent';
+                }
+              }}
+            >
+              <Icon size={20} />
+              <span>{text}</span>
+            </Link>
+          );
+        })}
+
+        {/* Cart Link (only for authenticated users) */}
+        {isAuthenticated() && (
+          <Link
+            to="/cart"
+            onClick={closeMenu}
+            style={{
+              ...drawerStyles.bmItem,
+              backgroundColor: isActive('/cart') ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              justifyContent: 'space-between'
+            }}
+            onMouseEnter={(e) => {
+              if (!isActive('/cart')) {
+                e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isActive('/cart')) {
+                e.target.style.backgroundColor = 'transparent';
+              }
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <FiShoppingCart size={20} />
+              <span>Mi Carrito</span>
+            </div>
+            {totalItems > 0 && (
+              <Badge
+                pill
+                style={{
+                  backgroundColor: '#ef4444',
+                  color: 'white',
+                  fontSize: '0.75rem',
+                  fontWeight: '600',
+                  padding: '4px 8px',
+                  minWidth: '24px',
+                  height: '24px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                {totalItems}
+              </Badge>
+            )}
+          </Link>
+        )}
+
+        {/* Logout (only for authenticated users) */}
+        {isAuthenticated() && (
+          <div style={{
+            marginTop: 'auto',
+            paddingTop: '2rem',
+            borderTop: '1px solid rgba(255, 255, 255, 0.2)'
+          }}>
+            <button
+              onClick={handleLogout}
+              style={{
+                ...drawerStyles.bmItem,
+                backgroundColor: 'transparent',
+                border: 'none',
+                width: '100%',
+                textAlign: 'left',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.75rem',
+                color: '#fca5a5'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = 'transparent';
+              }}
+            >
+              <FiLogOut size={20} />
+              <span>Cerrar Sesión</span>
+            </button>
+          </div>
+        )}
+      </Menu>
     </>
   );
 };

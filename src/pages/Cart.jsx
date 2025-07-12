@@ -145,7 +145,7 @@ const CartPage = () => {
 
       <Row>
         {/* Products List */}
-        <Col lg={8}>
+        <Col lg={8} md={12}>
           <div
             style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
           >
@@ -169,9 +169,9 @@ const CartPage = () => {
                 }}
               >
                 <Card.Body style={{ padding: "1.5rem" }}>
-                  <Row className="align-items-center">
+                  <Row className="align-items-center g-3">
                     {/* Product Image & Info */}
-                    <Col md={6}>
+                    <Col lg={6} md={12} sm={12}>
                       <div
                         style={{
                           display: "flex",
@@ -235,7 +235,7 @@ const CartPage = () => {
                     </Col>
 
                     {/* Quantity Controls */}
-                    <Col md={3}>
+                    <Col lg={3} md={6} sm={6}>
                       <div
                         style={{
                           display: "flex",
@@ -310,7 +310,7 @@ const CartPage = () => {
                     </Col>
 
                     {/* Subtotal & Actions */}
-                    <Col md={3}>
+                    <Col lg={3} md={6} sm={6}>
                       <div style={{ textAlign: "right" }}>
                         <p
                           style={{

@@ -34,6 +34,10 @@ export const gradient = keyframes`
 export const StyledContainer = styled(Container)`
   padding: 2rem 0;
   max-width: 1200px;
+
+  @media (max-width: 768px) {
+    padding: 1rem 0;
+  }
 `;
 
 export const HeroSection = styled.section`
@@ -68,6 +72,11 @@ export const HeroTitle = styled.h1`
 
   @media (max-width: 768px) {
     font-size: 2.5rem;
+    text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
   }
 `;
 
@@ -83,6 +92,11 @@ export const HeroImage = styled.div`
     height: 100%;
     object-fit: cover;
     object-position: center center;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 2rem;
+    aspect-ratio: 16/9;
   }
 `;
 
@@ -464,6 +478,14 @@ export const SectionTitle = styled.h2`
   color: #1e293b;
   margin-bottom: 1rem;
   text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.75rem;
+  }
 `;
 
 export const SectionDescription = styled.p`
@@ -472,6 +494,12 @@ export const SectionDescription = styled.p`
   max-width: 600px;
   margin: 0 auto 4rem auto;
   text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin: 0 auto 3rem auto;
+    padding: 0 1rem;
+  }
 `;
 
 export const PromoSection = styled.section`
@@ -480,6 +508,10 @@ export const PromoSection = styled.section`
   padding: 40px 0;
   position: relative;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    padding: 30px 0;
+  }
 
   &::before {
     content: '';
@@ -510,6 +542,14 @@ export const PromoTitle = styled.h3`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+
+  @media (max-width: 768px) {
+    font-size: 1.75rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+  }
 `;
 
 export const PromoDescription = styled.p`
@@ -518,8 +558,17 @@ export const PromoDescription = styled.p`
   opacity: 0.9;
   line-height: 1.6;
 
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
   span {
     font-size: 0.9rem;
     opacity: 0.8;
+
+    @media (max-width: 768px) {
+      font-size: 0.85rem;
+    }
   }
 `;

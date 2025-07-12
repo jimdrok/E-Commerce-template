@@ -37,7 +37,7 @@ const Home = () => {
         <Container>
           <HeroContent>
             <Row className="align-items-center">
-              <Col md={6}>
+              <Col lg={6} md={12}>
                 <HeroTitle>
                   Bienvenido a PedroShop
                 </HeroTitle>
@@ -47,7 +47,7 @@ const Home = () => {
                   Ver Productos
                 </PrimaryButton>
               </Col>
-              <Col md={6} className="mt-4 mt-md-0">
+              <Col lg={6} md={12} className="mt-4 mt-lg-0">
                 <HeroImage>
                   <img
                     src={bannerProduct}
@@ -76,7 +76,10 @@ const Home = () => {
             {categories.map((cat) => (
               <Col
                 key={cat.id}
-                md={3}
+                xl={3}
+                lg={4}
+                md={6}
+                sm={12}
                 className="mb-4 d-flex align-items-stretch"
               >
                 <Card

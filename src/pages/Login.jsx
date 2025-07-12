@@ -62,7 +62,7 @@ const Login = () => {
       }}
     >
       <Row className="w-100 justify-content-center">
-        <Col md={6} lg={4}>
+        <Col xs={12} sm={10} md={8} lg={6} xl={4}>
           <Card
             style={{
               border: "none",
