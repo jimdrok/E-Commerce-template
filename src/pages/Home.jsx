@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import bannerProduct from "../assets/bannerProduct.png";
+import { FiArrowRight, FiEye } from 'react-icons/fi';
 import {
   HeroSection,
   HeroContent,
@@ -42,6 +43,7 @@ const Home = () => {
                 </HeroTitle>
 
                 <PrimaryButton as={Link} to="/products">
+                  <FiEye style={{ marginRight: '8px' }} />
                   Ver Productos
                 </PrimaryButton>
               </Col>
@@ -134,6 +136,7 @@ const Home = () => {
                       as={Link}
                       to={`/products?category=${cat.name}`}
                     >
+                      <FiArrowRight style={{ marginRight: '4px' }} />
                       Explorar
                     </SecondaryButton>
                   </Card.Body>
@@ -166,6 +169,7 @@ const Home = () => {
                 fontSize: "1rem",
               }}
             >
+              <FiEye style={{ marginRight: '8px' }} />
               Ver Ofertas
             </PrimaryButton>
           </PromoContent>

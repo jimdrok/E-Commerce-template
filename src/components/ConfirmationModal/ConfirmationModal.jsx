@@ -1,4 +1,5 @@
 import { Modal, Button } from "react-bootstrap";
+import { FiAlertTriangle, FiInfo, FiBell, FiX, FiCheck } from 'react-icons/fi';
 
 const ConfirmationModal = ({ 
   show, 
@@ -11,6 +12,15 @@ const ConfirmationModal = ({
   variant = "danger",
   loading = false
 }) => {
+  const getIcon = () => {
+    switch(variant) {
+      case "danger": return <FiAlertTriangle size={20} />;
+      case "warning": return <FiBell size={20} />;
+      case "info": return <FiInfo size={20} />;
+      default: return <FiAlertTriangle size={20} />;
+    }
+  };
+
   return (
     <Modal 
       show={show} 
@@ -36,9 +46,7 @@ const ConfirmationModal = ({
             gap: "0.5rem"
           }}
         >
-          {variant === "danger" && "⚠️"}
-          {variant === "warning" && "🔔"}
-          {variant === "info" && "ℹ️"}
+          {getIcon()}
           {title}
         </Modal.Title>
       </Modal.Header>
@@ -79,6 +87,7 @@ const ConfirmationModal = ({
             minWidth: "120px"
           }}
         >
+          <FiX style={{ marginRight: '4px' }} />
           {cancelText}
         </Button>
         <Button
@@ -112,7 +121,10 @@ const ConfirmationModal = ({
               Procesando...
             </>
           ) : (
-            confirmText
+            <>
+              <FiCheck style={{ marginRight: '4px' }} />
+              {confirmText}
+            </>
           )}
         </Button>
       </Modal.Footer>

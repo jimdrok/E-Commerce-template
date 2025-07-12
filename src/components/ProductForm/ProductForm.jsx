@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Modal, Form, Button, Alert, Row, Col } from "react-bootstrap";
 import { useProducts } from "../../context/ProductContext";
+import { FiSave, FiX } from 'react-icons/fi';
+import { toast } from 'react-toastify';
 
 const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
   const { createProduct, updateProduct, loading } = useProducts();
@@ -135,6 +137,18 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
             : "¡Producto creado exitosamente!"
         );
         
+        // Toast notification
+        toast.success(
+          isEditing 
+            ? `Producto "${productData.title}" actualizado correctamente`
+            : `Producto "${productData.title}" creado correctamente`,
+          {
+            icon: isEditing ? '✏️' : '✅',
+            position: "top-right",
+            autoClose: 3000,
+          }
+        );
+        
         // Call success callback and close modal after a short delay
         setTimeout(() => {
           onSuccess && onSuccess(result.data);
@@ -142,9 +156,19 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
         }, 1500);
       } else {
         setSubmitError(result.error);
+        toast.error(result.error, {
+          icon: '❌',
+          position: "top-right",
+          autoClose: 4000,
+        });
       }
     } catch (error) {
       setSubmitError("Error inesperado: " + error.message);
+      toast.error("Error inesperado: " + error.message, {
+        icon: '❌',
+        position: "top-right",
+        autoClose: 4000,
+      });
     }
   };
 
@@ -424,6 +448,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
             borderRadius: "25px",
             padding: "10px 24px",
             fontWeight: "600",
+          <FiX style={{ marginRight: '4px' }} />
             color: "white",
             boxShadow: "0 4px 15px rgba(37, 99, 235, 0.3)"
           }}
@@ -445,7 +470,10 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
               {isEditing ? "Actualizando..." : "Creando..."}
             </>
           ) : (
-            isEditing ? "Actualizar Producto" : "Crear Producto"
+            <>
+              <FiSave style={{ marginRight: '8px' }} />
+              {isEditing ? "Actualizar Producto" : "Crear Producto"}
+            </>
           )}
         </Button>
       </Modal.Footer>

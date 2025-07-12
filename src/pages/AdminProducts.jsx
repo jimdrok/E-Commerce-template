@@ -13,6 +13,15 @@ import {
 import { useProducts } from "../context/ProductContext";
 import ProductForm from "../components/ProductForm/ProductForm";
 import ConfirmationModal from "../components/ConfirmationModal/ConfirmationModal";
+import { 
+  FiPlus, 
+  FiEdit3, 
+  FiTrash2, 
+  FiPackage,
+  FiChevronLeft,
+  FiChevronRight
+} from 'react-icons/fi';
+import { toast } from 'react-toastify';
 
 const AdminProducts = () => {
   const { products, loading, error, deleteProduct, clearError } = useProducts();
@@ -51,11 +60,21 @@ const AdminProducts = () => {
     try {
       const result = await deleteProduct(productToDelete.id);
       if (result.success) {
+        toast.success(`Producto "${productToDelete.title}" eliminado correctamente`, {
+          icon: '🗑️',
+          position: "top-right",
+          autoClose: 3000,
+        });
         setShowDeleteModal(false);
         setProductToDelete(null);
       }
     } catch (error) {
       console.error("Error deleting product:", error);
+      toast.error('Error al eliminar el producto', {
+        icon: '❌',
+        position: "top-right",
+        autoClose: 4000,
+      });
     } finally {
       setDeleteLoading(false);
     }
@@ -164,7 +183,8 @@ const AdminProducts = () => {
             e.target.style.boxShadow = "0 4px 15px rgba(37, 99, 235, 0.3)";
           }}
         >
-          ➕ Agregar Producto
+          <FiPlus style={{ marginRight: '8px' }} />
+          Agregar Producto
         </Button>
       </div>
 
@@ -208,7 +228,7 @@ const AdminProducts = () => {
               <div
                 style={{ fontSize: "4rem", marginBottom: "1rem", opacity: 0.5 }}
               >
-                📦
+                <FiPackage size={64} />
               </div>
               <h3 style={{ color: "#1e293b", marginBottom: "1rem" }}>
                 No hay productos
@@ -228,7 +248,8 @@ const AdminProducts = () => {
                   color: "white",
                 }}
               >
-                ➕ Agregar Primer Producto
+                <FiPlus style={{ marginRight: '8px' }} />
+                Agregar Primer Producto
               </Button>
             </div>
           ) : (
@@ -408,9 +429,13 @@ const AdminProducts = () => {
                               padding: "6px 12px",
                               fontSize: "0.8rem",
                               fontWeight: "600",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "4px",
                             }}
                           >
-                            ✏️ Editar
+                            <FiEdit3 size={14} />
+                            Editar
                           </Button>
                           <Button
                             size="sm"
@@ -422,9 +447,13 @@ const AdminProducts = () => {
                               padding: "6px 12px",
                               fontSize: "0.8rem",
                               fontWeight: "600",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "4px",
                             }}
                           >
-                            🗑️ Eliminar
+                            <FiTrash2 size={14} />
+                            Eliminar
                           </Button>
                         </div>
                       </td>
@@ -458,6 +487,7 @@ const AdminProducts = () => {
                   transition: "all 0.2s",
                 }}
               >
+                <FiChevronLeft style={{ marginRight: '4px' }} />
                 Anterior
               </button>
               {[...Array(totalPages)].map((_, idx) => (
@@ -494,6 +524,7 @@ const AdminProducts = () => {
                   transition: "all 0.2s",
                 }}
               >
+                <FiChevronRight style={{ marginLeft: '4px' }} />
                 Siguiente
               </button>
             </div>
