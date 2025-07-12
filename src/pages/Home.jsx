@@ -1,9 +1,24 @@
 "use client";
 
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import bannerProduct from "../assets/bannerProduct.png";
+import {
+  HeroSection,
+  HeroContent,
+  HeroTitle,
+  HeroImage,
+  PrimaryButton,
+  CategoriesSection,
+  SectionTitle,
+  SectionDescription,
+  PromoSection,
+  PromoContent,
+  PromoTitle,
+  PromoDescription,
+  SecondaryButton
+} from "../components/styled/StyledComponents";
 
 const Home = () => {
   const [categories, setCategories] = useState([]);
@@ -17,127 +32,43 @@ const Home = () => {
   return (
     <div className="home-page">
       {/* Hero Section */}
-      <section
-        className="hero"
-        style={{
-          background:
-            "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1e40af 100%)",
-          color: "white",
-          padding: "80px 0",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background:
-              'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fillRule="evenodd"%3E%3Cg fill="%23ffffff" fillOpacity="0.05"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
-            opacity: 0.3,
-          }}
-        ></div>
-        <Container style={{ position: "relative", zIndex: 2 }}>
-          <Row className="align-items-center">
-            <Col md={6}>
-              <h1
-                style={{
-                  fontSize: "3.5rem",
-                  fontWeight: "700",
+      <HeroSection>
+        <Container>
+          <HeroContent>
+            <Row className="align-items-center">
+              <Col md={6}>
+                <HeroTitle>
+                  Bienvenido a PedroShop
+                </HeroTitle>
 
-                  textShadow: "2px 2px 4px rgba(0,0,0,0.3)",
-                }}
-              >
-                Bienvenido a PedroShop
-              </h1>
-
-              <Button
-                as={Link}
-                to="/products"
-                style={{
-                  backgroundColor: "#ffffff",
-                  color: "#1e3a8a",
-                  border: "none",
-                  padding: "15px 40px",
-                  fontSize: "1.1rem",
-                  fontWeight: "600",
-                  borderRadius: "50px",
-                  boxShadow: "0 8px 25px rgba(0,0,0,0.2)",
-                  transition: "all 0.3s ease",
-                  textDecoration: "none",
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = "translateY(-2px)";
-                  e.target.style.boxShadow = "0 12px 35px rgba(0,0,0,0.3)";
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = "translateY(0)";
-                  e.target.style.boxShadow = "0 8px 25px rgba(0,0,0,0.2)";
-                }}
-              >
-                Ver Productos
-              </Button>
-            </Col>
-            <Col md={6} className="mt-4 mt-md-0">
-              <div
-                style={{
-                  position: "relative",
-                  borderRadius: "20px",
-                  overflow: "hidden", // Corregido
-                  boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
-                  aspectRatio: "16/10", // Relación de aspecto moderna
-                }}
-              >
-                <img
-                  src={bannerProduct}
-                  alt="Tech products"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover", // Ajuste inteligente
-                    objectPosition: "center center", // Enfoca área importante
-                  }}
-                />
-              </div>
-            </Col>
-          </Row>
+                <PrimaryButton as={Link} to="/products">
+                  Ver Productos
+                </PrimaryButton>
+              </Col>
+              <Col md={6} className="mt-4 mt-md-0">
+                <HeroImage>
+                  <img
+                    src={bannerProduct}
+                    alt="Tech products"
+                  />
+                </HeroImage>
+              </Col>
+            </Row>
+          </HeroContent>
         </Container>
-      </section>
+      </HeroSection>
 
       {/* Featured Categories */}
-      <section
-        style={{
-          padding: "80px 0",
-          backgroundColor: "#f8fafc",
-          background: "linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%)",
-        }}
-      >
+      <CategoriesSection>
         <Container>
           <div style={{ textAlign: "center", marginBottom: "4rem" }}>
-            <h2
-              style={{
-                fontSize: "2.5rem",
-                fontWeight: "700",
-                color: "#1e293b",
-                marginBottom: "1rem",
-              }}
-            >
+            <SectionTitle>
               Categorías Destacadas
-            </h2>
-            <p
-              style={{
-                fontSize: "1.1rem",
-                color: "#64748b",
-                maxWidth: "600px",
-                margin: "0 auto",
-              }}
-            >
+            </SectionTitle>
+            <SectionDescription>
               Explora nuestras categorías más populares y encuentra exactamente
               lo que buscas
-            </p>
+            </SectionDescription>
           </div>
           <Row className="justify-content-center">
             {categories.map((cat) => (
@@ -199,131 +130,47 @@ const Home = () => {
                     >
                       {cat.name}
                     </h5>
-                    <Button
+                    <SecondaryButton
                       as={Link}
                       to={`/products?category=${cat.name}`}
-                      style={{
-                        backgroundColor: "transparent",
-                        color: "#2563eb",
-                        border: "2px solid #2563eb",
-                        borderRadius: "25px",
-                        padding: "8px 24px",
-                        fontWeight: "600",
-                        fontSize: "0.9rem",
-                        transition: "all 0.3s ease",
-                        textDecoration: "none",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.target.style.backgroundColor = "#2563eb";
-                        e.target.style.color = "white";
-                        e.target.style.transform = "scale(1.05)";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.target.style.backgroundColor = "transparent";
-                        e.target.style.color = "#2563eb";
-                        e.target.style.transform = "scale(1)";
-                      }}
                     >
                       Explorar
-                    </Button>
+                    </SecondaryButton>
                   </Card.Body>
                 </Card>
               </Col>
             ))}
           </Row>
         </Container>
-      </section>
+      </CategoriesSection>
 
       {/* Promo Banner */}
-      <section
-        style={{
-          background:
-            "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)",
-          color: "white",
-          padding: "40px 0",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background:
-              'url("data:image/svg+xml,%3Csvg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23ffffff" fillOpacity="0.03"%3E%3Cpath d="M20 20c0-11.046-8.954-20-20-20v20h20z"/%3E%3C/g%3E%3C/svg%3E")',
-          }}
-        ></div>
-        <Container
-          style={{ textAlign: "center", position: "relative", zIndex: 2 }}
-        >
-          <div
-            style={{
-              backgroundColor: "rgba(59, 130, 246, 0.1)",
-              borderRadius: "20px",
-              padding: "2rem 1.5rem",
-              border: "1px solid rgba(59, 130, 246, 0.2)",
-            }}
-          >
-            <h3
-              style={{
-                fontSize: "2rem",
-                fontWeight: "700",
-                marginBottom: "1rem",
-                background: "linear-gradient(45deg, #3b82f6, #60a5fa)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
+      <PromoSection>
+        <Container style={{ textAlign: "center", position: "relative", zIndex: 2 }}>
+          <PromoContent>
+            <PromoTitle>
               ¡Ofertas Especiales!
-            </h3>
-            <p
-              style={{
-                fontSize: "1.1rem",
-                marginBottom: "1.5rem",
-                opacity: 0.9,
-                lineHeight: "1.6",
-              }}
-            >
+            </PromoTitle>
+            <PromoDescription>
               Hasta 50% de descuento en productos seleccionados.
               <br />
-              <span style={{ fontSize: "0.9rem", opacity: 0.8 }}>
+              <span>
                 Válido hasta agotar existencias
               </span>
-            </p>
-            <Button
+            </PromoDescription>
+            <PrimaryButton
               as={Link}
               to="/products"
               style={{
-                background: "linear-gradient(45deg, #3b82f6, #2563eb)",
-                border: "none",
-                borderRadius: "50px",
                 padding: "12px 32px",
                 fontSize: "1rem",
-                fontWeight: "600",
-                boxShadow: "0 8px 25px rgba(59, 130, 246, 0.4)",
-                transition: "all 0.3s ease",
-                textDecoration: "none",
-                color: "white",
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = "translateY(-3px) scale(1.05)";
-                e.target.style.boxShadow =
-                  "0 15px 35px rgba(59, 130, 246, 0.6)";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = "translateY(0) scale(1)";
-                e.target.style.boxShadow = "0 8px 25px rgba(59, 130, 246, 0.4)";
               }}
             >
               Ver Ofertas
-            </Button>
-          </div>
+            </PrimaryButton>
+          </PromoContent>
         </Container>
-      </section>
+      </PromoSection>
     </div>
   );
 };
