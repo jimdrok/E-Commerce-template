@@ -2,10 +2,21 @@
 import { Button, Badge, Container, Row, Col, Card } from "react-bootstrap";
 import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
-import { FiShoppingCart } from "react-icons/fi";
+import {
+  FiShoppingCart,
+  FiMinus,
+  FiPlus,
+  FiTrash2,
+  FiCreditCard,
+} from "react-icons/fi";
 
 const CartPage = () => {
-  const { cart } = useCart();
+  const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const totalPrice = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
   if (cart.length === 0) {
     return (
