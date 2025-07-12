@@ -62,65 +62,98 @@ const NavigationBar = () => {
             )}
           </Nav>
 
-          <Nav className="align-items-center bg-red-100">
+          <Nav className="align-items-center">
             {isAuthenticated() ? (
               <>
-                <Dropdown align="end" className="">
-                  <Dropdown.Toggle
-                    variant="light"
-                    id="dropdown-user"
-                    className="rounded-circle p-0 border-0 bg-white bg-opacity-10"
-                    style={{ width: "40px", height: "40px" }}
-                  >
-                    {user?.avatar ? (
-                      <img
-                        src={user.avatar}
-                        alt={user.name}
-                        className="rounded-circle"
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                        }}
-                      />
-                    ) : (
-                      <FiUser size={20} className="mx-auto" />
-                    )}
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu className="mt-2 border-0 shadow">
-                    <Dropdown.Header>
-                      <div className="fw-bold">{user?.name}</div>
-                      <div className="small text-muted">{user?.email}</div>
-                    </Dropdown.Header>
-
-                    <Dropdown.Divider />
-
-                    <Dropdown.Item
-                      as={Link}
-                      to="/cart"
-                      className="d-flex align-items-center gap-2"
+                {/* Desktop Dropdown (hidden on mobile) */}
+                <div className="d-none d-lg-block">
+                  <Dropdown align="end">
+                    <Dropdown.Toggle
+                      variant="light"
+                      id="dropdown-user"
+                      className="rounded-circle p-0 border-0 bg-white bg-opacity-10"
+                      style={{ width: "40px", height: "40px" }}
                     >
-                      <FiShoppingCart size={16} />
-                      Mi Carrito
-                      {totalItems > 0 && (
-                        <Badge pill bg="primary" className="ms-auto">
-                          {totalItems}
-                        </Badge>
+                      {user?.avatar ? (
+                        <img
+                          src={user.avatar}
+                          alt={user.name}
+                          className="rounded-circle"
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                          }}
+                        />
+                      ) : (
+                        <FiUser size={20} className="mx-auto" />
                       )}
-                    </Dropdown.Item>
+                    </Dropdown.Toggle>
 
-                    <Dropdown.Divider />
+                    <Dropdown.Menu className="mt-2 border-0 shadow">
+                      <Dropdown.Header>
+                        <div className="fw-bold">{user?.name}</div>
+                        <div className="small text-muted">{user?.email}</div>
+                      </Dropdown.Header>
 
-                    <Dropdown.Item
-                      onClick={logout}
-                      className="text-danger d-flex align-items-center gap-2"
-                    >
-                      <FiLogOut size={16} />
-                      Cerrar Sesión
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                      <Dropdown.Divider />
+
+                      <Dropdown.Item
+                        as={Link}
+                        to="/cart"
+                        className="d-flex align-items-center gap-2"
+                      >
+                        <FiShoppingCart size={16} />
+                        Mi Carrito
+                        {totalItems > 0 && (
+                          <Badge pill bg="primary" className="ms-auto">
+                            {totalItems}
+                          </Badge>
+                        )}
+                      </Dropdown.Item>
+
+                      <Dropdown.Divider />
+
+                      <Dropdown.Item
+                        onClick={logout}
+                        className="text-danger d-flex align-items-center gap-2"
+                      >
+                        <FiLogOut size={16} />
+                        Cerrar Sesión
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+
+                {/* Mobile Menu Items (shown on mobile) */}
+                <div className="d-lg-none">
+                  <Nav.Link
+                    as={Link}
+                    to="/cart"
+                    className="d-flex align-items-center gap-1"
+                  >
+                    <FiShoppingCart size={16} />
+                    Mi Carrito
+                    {totalItems > 0 && (
+                      <Badge pill bg="primary" className="ms-2">
+                        {totalItems}
+                      </Badge>
+                    )}
+                  </Nav.Link>
+
+                  <Nav.Link className="d-flex align-items-center gap-1">
+                    <FiUser size={16} />
+                    {user?.name}
+                  </Nav.Link>
+
+                  <Nav.Link
+                    onClick={logout}
+                    className="d-flex align-items-center gap-1 text-danger"
+                  >
+                    <FiLogOut size={16} />
+                    Cerrar Sesión
+                  </Nav.Link>
+                </div>
               </>
             ) : (
               <Nav.Link
