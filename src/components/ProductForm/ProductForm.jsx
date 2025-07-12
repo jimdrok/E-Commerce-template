@@ -246,8 +246,8 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
         )}
 
         <Form onSubmit={handleSubmit}>
-          <Row>
-            <Col md={6}>
+          <Row className="g-3">
+            <Col lg={6} md={12}>
               <Form.Group className="mb-3">
                 <Form.Label
                   style={{
@@ -278,7 +278,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
               </Form.Group>
             </Col>
 
-            <Col md={6}>
+            <Col lg={6} md={12}>
               <Form.Group className="mb-3">
                 <Form.Label
                   style={{
@@ -312,8 +312,8 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
             </Col>
           </Row>
 
-          <Row>
-            <Col md={6}>
+          <Row className="g-3">
+            <Col lg={6} md={12}>
               <Form.Group className="mb-3">
                 <Form.Label
                   style={{
@@ -349,7 +349,7 @@ const ProductForm = ({ show, onHide, product = null, onSuccess }) => {
               </Form.Group>
             </Col>
 
-            <Col md={6}>
+            <Col lg={6} md={12}>
               <Form.Group className="mb-3">
                 <Form.Label
                   style={{
