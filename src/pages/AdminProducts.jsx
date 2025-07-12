@@ -13,15 +13,15 @@ import {
 import { useProducts } from "../context/ProductContext";
 import ProductForm from "../components/ProductForm/ProductForm";
 import ConfirmationModal from "../components/ConfirmationModal/ConfirmationModal";
-import { 
-  FiPlus, 
-  FiEdit3, 
-  FiTrash2, 
+import {
+  FiPlus,
+  FiEdit3,
+  FiTrash2,
   FiPackage,
   FiChevronLeft,
-  FiChevronRight
-} from 'react-icons/fi';
-import { toast } from 'react-toastify';
+  FiChevronRight,
+} from "react-icons/fi";
+import { toast } from "react-toastify";
 
 const AdminProducts = () => {
   const { products, loading, error, deleteProduct, clearError } = useProducts();
@@ -60,18 +60,21 @@ const AdminProducts = () => {
     try {
       const result = await deleteProduct(productToDelete.id);
       if (result.success) {
-        toast.success(`Producto "${productToDelete.title}" eliminado correctamente`, {
-          icon: '🗑️',
-          position: "top-right",
-          autoClose: 3000,
-        });
+        toast.success(
+          `Producto "${productToDelete.title}" eliminado correctamente`,
+          {
+            icon: "🗑️",
+            position: "top-right",
+            autoClose: 3000,
+          }
+        );
         setShowDeleteModal(false);
         setProductToDelete(null);
       }
     } catch (error) {
       console.error("Error deleting product:", error);
-      toast.error('Error al eliminar el producto', {
-        icon: '❌',
+      toast.error("Error al eliminar el producto", {
+        icon: "❌",
         position: "top-right",
         autoClose: 4000,
       });
@@ -183,7 +186,7 @@ const AdminProducts = () => {
             e.target.style.boxShadow = "0 4px 15px rgba(37, 99, 235, 0.3)";
           }}
         >
-          <FiPlus style={{ marginRight: '8px' }} />
+          <FiPlus style={{ marginRight: "8px" }} />
           Agregar Producto
         </Button>
       </div>
@@ -248,7 +251,7 @@ const AdminProducts = () => {
                   color: "white",
                 }}
               >
-                <FiPlus style={{ marginRight: '8px' }} />
+                <FiPlus style={{ marginRight: "8px" }} />
                 Agregar Primer Producto
               </Button>
             </div>
@@ -267,7 +270,7 @@ const AdminProducts = () => {
                         padding: "1rem",
                         fontWeight: "600",
                         color: "#1e293b",
-                        minWidth: "200px"
+                        minWidth: "200px",
                       }}
                     >
                       Producto
@@ -277,7 +280,7 @@ const AdminProducts = () => {
                         padding: "1rem",
                         fontWeight: "600",
                         color: "#1e293b",
-                        minWidth: "120px"
+                        minWidth: "120px",
                       }}
                     >
                       Categoría
@@ -287,7 +290,7 @@ const AdminProducts = () => {
                         padding: "1rem",
                         fontWeight: "600",
                         color: "#1e293b",
-                        minWidth: "100px"
+                        minWidth: "100px",
                       }}
                     >
                       Precio
@@ -297,7 +300,7 @@ const AdminProducts = () => {
                         padding: "1rem",
                         fontWeight: "600",
                         color: "#1e293b",
-                        minWidth: "250px"
+                        minWidth: "250px",
                       }}
                     >
                       Descripción
@@ -308,7 +311,7 @@ const AdminProducts = () => {
                         fontWeight: "600",
                         color: "#1e293b",
                         textAlign: "center",
-                        minWidth: "180px"
+                        minWidth: "180px",
                       }}
                     >
                       Acciones
@@ -474,7 +477,7 @@ const AdminProducts = () => {
               style={{
                 display: "flex",
                 justifyContent: "center",
-                margin: "2rem 0 1rem 0",
+                marginTop: "2rem",
                 gap: "8px",
               }}
             >
@@ -490,10 +493,15 @@ const AdminProducts = () => {
                   fontWeight: "600",
                   cursor: currentPage === 1 ? "not-allowed" : "pointer",
                   transition: "all 0.2s",
+                  minWidth: "40px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
+                aria-label="Anterior"
               >
-                <FiChevronLeft style={{ marginRight: '4px' }} />
-                Anterior
+                <span className="d-block d-md-none">&#60;</span>
+                <span className="d-none d-md-block">Anterior</span>
               </button>
               {[...Array(totalPages)].map((_, idx) => (
                 <button
@@ -508,6 +516,7 @@ const AdminProducts = () => {
                     fontWeight: "600",
                     cursor: "pointer",
                     transition: "all 0.2s",
+                    minWidth: "32px",
                   }}
                 >
                   {idx + 1}
@@ -527,10 +536,15 @@ const AdminProducts = () => {
                   cursor:
                     currentPage === totalPages ? "not-allowed" : "pointer",
                   transition: "all 0.2s",
+                  minWidth: "40px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
+                aria-label="Siguiente"
               >
-                <FiChevronRight style={{ marginLeft: '4px' }} />
-                Siguiente
+                <span className="d-block d-md-none">&#62;</span>
+                <span className="d-none d-md-block">Siguiente</span>
               </button>
             </div>
           )}

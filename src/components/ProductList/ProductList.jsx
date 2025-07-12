@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
-import { FiEye, FiShoppingCart, FiTruck } from 'react-icons/fi';
-import { toast } from 'react-toastify';
+import { FiEye, FiShoppingCart, FiTruck } from "react-icons/fi";
+import { toast } from "react-toastify";
 import {
   ProductCard,
   ProductImageContainer,
@@ -18,7 +18,7 @@ import {
   SecondaryButton,
   AddToCartButton,
   SuccessAlert,
-  WarningAlert
+  WarningAlert,
 } from "../styled/StyledComponents";
 
 const ProductList = ({ products }) => {
@@ -44,13 +44,8 @@ const ProductList = ({ products }) => {
           <Col key={product.id}>
             <ProductCard className="h-100">
               <ProductImageContainer>
-                <ProductImage
-                  variant="top"
-                  src={product.image}
-                />
-                <ProductBadge>
-                  Nuevo
-                </ProductBadge>
+                <ProductImage variant="top" src={product.image} />
+                <ProductBadge>Nuevo</ProductBadge>
               </ProductImageContainer>
 
               <ProductBody className="d-flex flex-column">
@@ -67,11 +62,9 @@ const ProductList = ({ products }) => {
                       marginBottom: "1rem",
                     }}
                   >
-                    <ProductPrice>
-                      ${product.price}
-                    </ProductPrice>
+                    <ProductPrice>${product.price}</ProductPrice>
                     <ShippingBadge>
-                      <FiTruck style={{ marginRight: '4px' }} />
+                      <FiTruck style={{ marginRight: "4px" }} />
                       Envío gratis
                     </ShippingBadge>
                   </div>
@@ -83,11 +76,8 @@ const ProductList = ({ products }) => {
                       gap: "8px",
                     }}
                   >
-                    <SecondaryButton
-                      as={Link}
-                      to={`/products/${product.id}`}
-                    >
-                      <FiEye style={{ marginRight: '8px' }} />
+                    <SecondaryButton as={Link} to={`/products/${product.id}`}>
+                      <FiEye style={{ marginRight: "8px" }} />
                       Ver Detalles
                     </SecondaryButton>
 
@@ -96,21 +86,27 @@ const ProductList = ({ products }) => {
                       onClick={() => {
                         if (isAuthenticated()) {
                           addToCart(product);
-                          toast.success(`¡${product.title} agregado al carrito!`, {
-                            icon: '🛒',
-                            position: "top-right",
-                            autoClose: 3000,
-                          });
+                          toast.success(
+                            `¡${product.title} agregado al carrito!`,
+                            {
+                              icon: "🛒",
+                              position: "top-right",
+                              autoClose: 3000,
+                            }
+                          );
                         } else {
-                          toast.warning('Inicia sesión para agregar productos al carrito', {
-                            icon: '🔒',
-                            position: "top-right",
-                            autoClose: 3000,
-                          });
+                          toast.warning(
+                            "Inicia sesión para agregar productos al carrito",
+                            {
+                              icon: "🔒",
+                              position: "top-right",
+                              autoClose: 3000,
+                            }
+                          );
                         }
                       }}
                     >
-                      <FiShoppingCart style={{ marginRight: '8px' }} />
+                      <FiShoppingCart style={{ marginRight: "8px" }} />
                       Agregar al carrito
                     </AddToCartButton>
                   </div>
@@ -142,9 +138,15 @@ const ProductList = ({ products }) => {
               fontWeight: "600",
               cursor: currentPage === 1 ? "not-allowed" : "pointer",
               transition: "all 0.2s",
+              minWidth: "40px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
+            aria-label="Anterior"
           >
-            Anterior
+            <span className="d-block d-md-none">&#60;</span>
+            <span className="d-none d-md-block">Anterior</span>
           </button>
           {[...Array(totalPages)].map((_, idx) => (
             <button
@@ -159,6 +161,7 @@ const ProductList = ({ products }) => {
                 fontWeight: "600",
                 cursor: "pointer",
                 transition: "all 0.2s",
+                minWidth: "32px",
               }}
             >
               {idx + 1}
@@ -176,9 +179,15 @@ const ProductList = ({ products }) => {
               fontWeight: "600",
               cursor: currentPage === totalPages ? "not-allowed" : "pointer",
               transition: "all 0.2s",
+              minWidth: "40px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
+            aria-label="Siguiente"
           >
-            Siguiente
+            <span className="d-block d-md-none">&#62;</span>
+            <span className="d-none d-md-block">Siguiente</span>
           </button>
         </div>
       )}
